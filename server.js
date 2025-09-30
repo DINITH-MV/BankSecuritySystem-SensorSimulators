@@ -14,17 +14,17 @@ const FIXED_ZONES = [
   {
     name: "External Perimeter",
     port: 3000,
-    batchFile: "start_external_perimeter_system.bat",
+    scriptFile: "start_external_perimeter_system.sh",
   },
   {
     name: "Ground Floor",
     port: 3001,
-    batchFile: "start_ground_floor_system.bat",
+    scriptFile: "start_ground_floor_system.sh",
   },
   {
     name: "High Security Floor",
     port: 3100,
-    batchFile: "start_high_security_floor_system.bat",
+    scriptFile: "start_high_security_floor_system.sh",
   },
 ];
 
@@ -273,26 +273,26 @@ class SecuritySystemOrchestrator {
 
     // Check fixed zones
     for (const zone of FIXED_ZONES) {
-      const filePath = join(zoneStarterPath, zone.batchFile);
+      const filePath = join(zoneStarterPath, zone.scriptFile);
       if (!fs.existsSync(filePath)) {
-        missingFiles.push(zone.batchFile);
+        missingFiles.push(zone.scriptFile);
       }
     }
 
     // Check office floors
     for (let i = 1; i <= this.officeFloors; i++) {
-      const batchFile = `start_office_floor_${i}_system.bat`;
-      const filePath = join(zoneStarterPath, batchFile);
+      const scriptFile = `start_office_floor_${i}_system.sh`;
+      const filePath = join(zoneStarterPath, scriptFile);
       if (!fs.existsSync(filePath)) {
-        missingFiles.push(batchFile);
+        missingFiles.push(scriptFile);
       }
     }
 
     if (missingFiles.length > 0) {
-      console.error("\n CRITICAL ERROR: Missing batch files:");
+      console.error("\n CRITICAL ERROR: Missing script files:");
       missingFiles.forEach((file) => console.error(`   - ${file}`));
       console.error(
-        "\nPlease ensure all required batch files exist in the zone_starter directory.\n"
+        "\nPlease ensure all required shell script files exist in the zone_starter directory.\n"
       );
       process.exit(1);
     }
@@ -351,14 +351,14 @@ class SecuritySystemOrchestrator {
 
     // Start fixed zones
     for (const zone of FIXED_ZONES) {
-      await this.startZone(zone.name, zone.port, zone.batchFile);
+      await this.startZone(zone.name, zone.port, zone.scriptFile);
     }
 
     // Start office floors
     for (let i = 1; i <= this.officeFloors; i++) {
       const port = BASE_OFFICE_PORT + i - 1;
-      const batchFile = `start_office_floor_${i}_system.bat`;
-      await this.startZone(`Office Floor ${i}`, port, batchFile);
+      const scriptFile = `start_office_floor_${i}_system.sh`;
+      await this.startZone(`Office Floor ${i}`, port, scriptFile);
     }
 
     this.isRunning = true;
@@ -370,28 +370,37 @@ class SecuritySystemOrchestrator {
     }
   }
 
-  async startZone(zoneName, port, batchFile) {
+  async startZone(zoneName, port, scriptFile) {
     console.log(`Starting ${zoneName} (Port ${port})...`);
     console.log(`- Enhanced Security with Command-Based Control`);
-    console.log(`Executing: ${batchFile}`);
+    console.log(`Executing: ${scriptFile}`);
 
     const zoneStarterPath = join(__dirname, "zone_starter");
-    const batchFilePath = join(zoneStarterPath, batchFile);
+    const scriptFilePath = join(zoneStarterPath, scriptFile);
 
     try {
+      // Make sure the script file is executable
+      if (fs.existsSync(scriptFilePath)) {
+        await new Promise((resolve, reject) => {
+          spawn("chmod", ["+x", scriptFilePath], { stdio: "ignore" })
+            .on("close", (code) => {
+              if (code === 0) resolve();
+              else reject(new Error(`chmod failed with code ${code}`));
+            })
+            .on("error", reject);
+        });
+      }
+
       const process = spawn(
-        "cmd",
+        "bash",
         [
-          "/c",
-          "start",
-          `"Zone-${zoneName.replace(/\s+/g, "-")}"`,
-          "cmd",
-          "/c",
-          `cd ${zoneStarterPath} && echo Terminal Command Test Successful && echo Zone Starter Path: ${zoneStarterPath} && echo This window will close in 10 seconds... && ${batchFile} && timeout /t 10 /nobreak >nul`,
+          "-c",
+          `cd "${zoneStarterPath}" && echo "Terminal Command Test Successful" && echo "Zone Starter Path: ${zoneStarterPath}" && echo "Starting ${zoneName}..." && ./${scriptFile}`,
         ],
         {
           detached: true,
-          stdio: "ignore",
+          stdio: ["ignore", "pipe", "pipe"],
+          cwd: zoneStarterPath,
         }
       );
 
