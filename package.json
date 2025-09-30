@@ -1,0 +1,30 @@
+{
+  "name": "iot-security-system",
+  "version": "1.0.0",
+  "description": "IoT Security System with Edge Layer Sensors",
+  "main": "controllers/status_server.js",
+  "type": "module",
+  "scripts": {
+    "start": "node controllers/status_server.js",
+    "start-dynamic": "node server.js",
+    "start-system": "start_complete_system.bat",
+    "start-sensors": "start_all_sensor_controllers.bat",
+    "start-controllers": "start_all_zone_controllers.bat",
+    "start-actuators": "start_all_actuator_controllers.bat"
+  },
+  "dependencies": {
+    "axios": "^1.11.0",
+    "cors": "^2.8.5",
+    "express": "^4.18.2",
+    "mqtt": "^4.3.7"
+  },
+  "keywords": [
+    "iot",
+    "security",
+    "sensors",
+    "mqtt",
+    "express"
+  ],
+  "author": "Security System Team",
+  "license": "MIT"
+}

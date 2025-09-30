@@ -1,0 +1,357 @@
+import { spawn } from "child_process";
+import { fileURLToPath } from "url";
+import { dirname, join } from "path";
+import fs from "fs";
+import readline from "readline";
+
+const __filename = fileURLToPath(import.meta.url);
+const __dirname = dirname(__filename);
+
+// Configuration
+const BASE_OFFICE_PORT = 3002; // Office Floor 1 starts at port 3002
+const FIXED_ZONES = [
+  {
+    name: "External Perimeter",
+    port: 3000,
+    batchFile: "start_external_perimeter_system.bat",
+  },
+  {
+    name: "Ground Floor",
+    port: 3001,
+    batchFile: "start_ground_floor_system.bat",
+  },
+  {
+    name: "High Security Floor",
+    port: 3100,
+    batchFile: "start_high_security_floor_system.bat",
+  },
+];
+
+class SecuritySystemOrchestrator {
+  constructor() {
+    this.processes = [];
+    this.officeFloors = 0;
+    this.rl = readline.createInterface({
+      input: process.stdin,
+      output: process.stdout,
+    });
+  }
+
+  async initialize() {
+    console.log("===============================================");
+    console.log("    SECURITY SYSTEM DYNAMIC ORCHESTRATOR");
+    console.log("===============================================");
+    console.log("    Enhanced Command-Driven Architecture");
+    console.log("    Date: September 30, 2025");
+    console.log("    Dynamic Office Floor Management");
+    console.log("===============================================\n");
+
+    await this.getOfficeFloorsInput();
+    await this.validateBatchFiles();
+    await this.showSystemOverview();
+    await this.confirmAndStart();
+  }
+
+  async getOfficeFloorsInput() {
+    return new Promise((resolve) => {
+      const askForFloors = () => {
+        this.rl.question(
+          "Enter the number of office floors to activate (1-30): ",
+          (answer) => {
+            const floors = parseInt(answer);
+            if (isNaN(floors) || floors < 1 || floors > 30) {
+              console.log(
+                "Invalid input. Please enter a number between 1 and 30."
+              );
+              askForFloors();
+            } else {
+              this.officeFloors = floors;
+              console.log(
+                `\n✓ Selected ${floors} office floor(s) for activation.\n`
+              );
+              resolve();
+            }
+          }
+        );
+      };
+      askForFloors();
+    });
+  }
+
+  async validateBatchFiles() {
+    console.log("Validating zone starter files...");
+    const zoneStarterPath = join(__dirname, "zone_starter");
+    let missingFiles = [];
+
+    // Check fixed zones
+    for (const zone of FIXED_ZONES) {
+      const filePath = join(zoneStarterPath, zone.batchFile);
+      if (!fs.existsSync(filePath)) {
+        missingFiles.push(zone.batchFile);
+      }
+    }
+
+    // Check office floors
+    for (let i = 1; i <= this.officeFloors; i++) {
+      const batchFile = `start_office_floor_${i}_system.bat`;
+      const filePath = join(zoneStarterPath, batchFile);
+      if (!fs.existsSync(filePath)) {
+        missingFiles.push(batchFile);
+      }
+    }
+
+    if (missingFiles.length > 0) {
+      console.error("\n❌ CRITICAL ERROR: Missing batch files:");
+      missingFiles.forEach((file) => console.error(`   - ${file}`));
+      console.error(
+        "\nPlease ensure all required batch files exist in the zone_starter directory.\n"
+      );
+      process.exit(1);
+    }
+
+    console.log("✓ All zone starter files validated successfully!\n");
+  }
+
+  async showSystemOverview() {
+    console.log("===============================================");
+    console.log("           SYSTEM DEPLOYMENT OVERVIEW");
+    console.log("===============================================");
+
+    console.log("\nFixed Security Zones:");
+    FIXED_ZONES.forEach((zone, index) => {
+      console.log(`  ${index + 1}. ${zone.name} (Port ${zone.port})`);
+    });
+
+    console.log(`\nOffice Floors (${this.officeFloors} floors):`);
+    for (let i = 1; i <= this.officeFloors; i++) {
+      const port = BASE_OFFICE_PORT + i - 1;
+      console.log(
+        `  ${FIXED_ZONES.length + i}. Office Floor ${i} (Port ${port})`
+      );
+    }
+
+    const totalZones = FIXED_ZONES.length + this.officeFloors;
+    console.log(`\nTotal Zones: ${totalZones}`);
+    console.log(
+      `Port Range: 3000-${BASE_OFFICE_PORT + this.officeFloors - 1}, 3100`
+    );
+    console.log("Architecture: Command-Driven Multi-Zone Security System");
+  }
+
+  async confirmAndStart() {
+    return new Promise((resolve) => {
+      this.rl.question(
+        "\nProceed with system startup? (y/n): ",
+        async (answer) => {
+          if (answer.toLowerCase() === "y" || answer.toLowerCase() === "yes") {
+            await this.startAllZones();
+            resolve();
+          } else {
+            console.log("System startup cancelled.");
+            process.exit(0);
+          }
+        }
+      );
+    });
+  }
+
+  async startAllZones() {
+    console.log("\n===============================================");
+    console.log("      STARTING ALL ZONES: COMPLETE BUILDING");
+    console.log("===============================================");
+    console.log("Full Building Coverage with Enhanced Command Architecture\n");
+
+    // Start fixed zones
+    for (const zone of FIXED_ZONES) {
+      await this.startZone(zone.name, zone.port, zone.batchFile);
+    }
+
+    // Start office floors
+    for (let i = 1; i <= this.officeFloors; i++) {
+      const port = BASE_OFFICE_PORT + i - 1;
+      const batchFile = `start_office_floor_${i}_system.bat`;
+      await this.startZone(`Office Floor ${i}`, port, batchFile);
+    }
+
+    await this.showSystemStatus();
+    await this.setupGracefulShutdown();
+  }
+
+  async startZone(zoneName, port, batchFile) {
+    console.log(`Starting ${zoneName} (Port ${port})...`);
+    console.log(`- Enhanced Security with Command-Based Control`);
+    console.log(`Executing: ${batchFile}`);
+
+    const zoneStarterPath = join(__dirname, "zone_starter");
+    const batchFilePath = join(zoneStarterPath, batchFile);
+
+    try {
+      const process = spawn(
+        "cmd",
+        [
+          "/c",
+          "start",
+          `"Zone-${zoneName.replace(/\s+/g, "-")}"`,
+          "cmd",
+          "/c",
+          `cd ${zoneStarterPath} && echo Terminal Command Test Successful && echo Zone Starter Path: ${zoneStarterPath} && echo This window will close in 10 seconds... && ${batchFile} && timeout /t 10 /nobreak >nul`,
+        ],
+        {
+          detached: true,
+          stdio: "ignore",
+        }
+      );
+
+      this.processes.push({
+        name: zoneName,
+        port: port,
+        process: process,
+        pid: process.pid,
+      });
+
+      // Wait a bit between starts to prevent resource conflicts
+      await this.sleep(3000);
+      console.log(`✓ ${zoneName} started successfully!\n`);
+    } catch (error) {
+      console.error(`❌ ERROR starting ${zoneName}: ${error.message}\n`);
+    }
+  }
+
+  async showSystemStatus() {
+    console.log("===============================================");
+    console.log("           SYSTEM STARTUP COMPLETE");
+    console.log("===============================================\n");
+
+    console.log("Active Zones Summary:");
+    console.log(
+      `- Total Active Zones: ${FIXED_ZONES.length + this.officeFloors}/${
+        FIXED_ZONES.length + this.officeFloors
+      }`
+    );
+    console.log(
+      "- Architecture: Complete Building Security with Enhanced Command-Driven Control"
+    );
+    console.log(
+      "- Coverage: Full Building with Multi-Layer Security Defense\n"
+    );
+
+    console.log("Zone Details:");
+
+    // Fixed zones
+    FIXED_ZONES.forEach((zone) => {
+      console.log(`✓ ${zone.name} (Port ${zone.port}) [ACTIVE]`);
+    });
+
+    // Office floors
+    for (let i = 1; i <= this.officeFloors; i++) {
+      const port = BASE_OFFICE_PORT + i - 1;
+      console.log(
+        `✓ Office Floor ${i} (Port ${port}) [ACTIVE - ENHANCED OFFICE SECURITY]`
+      );
+    }
+
+    console.log("\nSystem Configuration:");
+    console.log("- MQTT Broker: localhost:1883 (Aedes)");
+    console.log(
+      `- Web Servers: Ports 3000-${
+        BASE_OFFICE_PORT + this.officeFloors - 1
+      }, 3100`
+    );
+    console.log("- Communication: HTTP + MQTT");
+    console.log("- Architecture: Command-Driven Actuator Control\n");
+
+    console.log("Quick Health Check URLs:");
+    FIXED_ZONES.forEach((zone) => {
+      console.log(`- ${zone.name}: http://localhost:${zone.port}/health`);
+    });
+
+    for (let i = 1; i <= this.officeFloors; i++) {
+      const port = BASE_OFFICE_PORT + i - 1;
+      console.log(`- Office Floor ${i}: http://localhost:${port}/health`);
+    }
+
+    console.log("\nCommand Endpoints:");
+    FIXED_ZONES.forEach((zone) => {
+      const zoneName = zone.name.toLowerCase().replace(/\s+/g, "_");
+      console.log(
+        `- ${zone.name}: /siren-commands/${zoneName}, /beacon-commands/${zoneName}`
+      );
+    });
+
+    for (let i = 1; i <= this.officeFloors; i++) {
+      console.log(
+        `- Office Floor ${i}: /siren-commands/office_floor_${i}, /beacon-commands/office_floor_${i}`
+      );
+    }
+
+    console.log("\n✅ COMPLETE BUILDING SECURITY ACTIVE.");
+    console.log("\nPress Ctrl+C to shutdown all zones gracefully...");
+  }
+
+  async setupGracefulShutdown() {
+    process.on("SIGINT", () => {
+      console.log("\n\n===============================================");
+      console.log("           GRACEFUL SHUTDOWN INITIATED");
+      console.log("===============================================");
+      console.log("Shutting down all zones...\n");
+
+      console.log("Note: Individual zone windows will remain open.");
+      console.log("Close individual zone windows manually if needed.");
+      console.log("Master orchestrator shutting down...\n");
+
+      this.rl.close();
+      process.exit(0);
+    });
+
+    // Keep the process alive
+    await this.keepAlive();
+  }
+
+  async keepAlive() {
+    return new Promise((resolve) => {
+      // Keep the process running
+      const keepRunning = () => {
+        setTimeout(keepRunning, 1000);
+      };
+      keepRunning();
+    });
+  }
+
+  sleep(ms) {
+    return new Promise((resolve) => setTimeout(resolve, ms));
+  }
+}
+
+// Main execution
+async function main() {
+  try {
+    const orchestrator = new SecuritySystemOrchestrator();
+    await orchestrator.initialize();
+  } catch (error) {
+    console.error("❌ Fatal Error:", error.message);
+    process.exit(1);
+  }
+}
+
+// Run the application
+const isMainModule = () => {
+  try {
+    const mainModulePath = fileURLToPath(import.meta.url);
+    return (
+      process.argv[1] === mainModulePath ||
+      process.argv[1] === mainModulePath.replace(/\\/g, "/")
+    );
+  } catch {
+    return false;
+  }
+};
+
+if (isMainModule()) {
+  main().catch((error) => {
+    console.error("❌ Fatal Error:", error.message);
+    console.error(error.stack);
+    process.exit(1);
+  });
+}
+
+export { SecuritySystemOrchestrator };

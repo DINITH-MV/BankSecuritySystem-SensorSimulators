@@ -1,0 +1,63 @@
+name: CICD
+
+on:
+  push:
+    branches: [main]
+
+jobs:
+  build:
+    runs-on: [ubuntu-latest]
+    steps:
+      - name: Checkout source
+        uses: actions/checkout@v3
+      - name: Login to docker hub
+        run: docker login -u ${{ secrets.DOCKER_USERNAME }} -p ${{ secrets.DOCKER_PASSWORD }}
+      - name: Build docker image
+        run: docker build -t ${{ secrets.DOCKER_USERNAME }}/sensorsimulators .
+      - name: Publish image to docker hub
+        run: docker push ${{ secrets.DOCKER_USERNAME }}/sensorsimulators:latest
+
+  deploy:
+    needs: build
+    runs-on: [aws-ec2]
+    steps:
+      - name: Check and Install Docker
+        run: |
+          if ! command -v docker &> /dev/null; then
+            echo "Docker not found. Installing Docker..."
+            # Update system
+            sudo apt-get update
+            # Install Docker using convenience script
+            curl -fsSL https://get.docker.com -o get-docker.sh
+            sudo sh get-docker.sh
+            # Start Docker service
+            sudo systemctl start docker
+            sudo systemctl enable docker
+            # Add user to docker group
+            sudo usermod -aG docker $USER
+            echo "Docker installed successfully"
+          else
+            echo "Docker is already installed"
+            sudo systemctl start docker
+          fi
+      - name: Verify Docker installation
+        run: |
+          sudo docker --version
+          sudo systemctl status docker --no-pager
+      - name: Pull image from docker hub
+        run: sudo docker pull ${{ secrets.DOCKER_USERNAME }}/sensorsimulators:latest
+      - name: Delete old container
+        run: |
+          if sudo docker ps -a --format 'table {{.Names}}' | grep -q nodejs-app-container; then
+            echo "Stopping and removing existing container..."
+            sudo docker stop nodejs-app-container || true
+            sudo docker rm nodejs-app-container || true
+          else
+            echo "No existing container found"
+          fi
+      - name: Run docker container
+        run: |
+          echo "Starting new container..."
+          sudo docker run -d -p 5000:5000 --name nodejs-app-container ${{ secrets.DOCKER_USERNAME }}/sensorsimulators:latest
+          echo "Container started successfully"
+          sudo docker ps
