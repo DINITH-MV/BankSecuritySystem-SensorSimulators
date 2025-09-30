@@ -65,6 +65,7 @@ app.get("/sensor-data", (req, res) => {
   res.json(sensorDataStore);
 });
 
+
 // Endpoint to get specific sensor data
 app.get("/sensor-data/:sensorId", (req, res) => {
   const { sensorId } = req.params;
