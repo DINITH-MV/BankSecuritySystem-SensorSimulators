@@ -1,4 +1,4 @@
-FROM node:18-nanoserver
+FROM stefanscherer/node-windows:latest
 WORKDIR /app
 COPY package.json ./
 RUN npm install
