@@ -1,4 +1,4 @@
-FROM node:16.20.1
+FROM node:18-windowsservercore-ltsc2022
 WORKDIR /app
 COPY package.json ./
 RUN npm install

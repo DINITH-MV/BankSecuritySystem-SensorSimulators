@@ -5,8 +5,7 @@
   "main": "controllers/status_server.js",
   "type": "module",
   "scripts": {
-    "start": "node controllers/status_server.js",
-    "start-dynamic": "node server.js",
+    "start": "node server.js",
     "start-system": "start_complete_system.bat",
     "start-sensors": "start_all_sensor_controllers.bat",
     "start-controllers": "start_all_zone_controllers.bat",
