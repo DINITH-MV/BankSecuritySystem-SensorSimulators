@@ -1,4 +1,4 @@
-FROM node:18-windowsservercore-ltsc2022
+FROM node:18-nanoserver
 WORKDIR /app
 COPY package.json ./
 RUN npm install
