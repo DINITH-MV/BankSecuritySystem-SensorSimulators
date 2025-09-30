@@ -1,0 +1,596 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Actuator Control Dashboard</title>
+    <link rel="stylesheet" href="style.css" />
+    <link
+      href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css"
+      rel="stylesheet"
+    />
+  </head>
+  <body>
+    <div class="dashboard-container">
+      <!-- Header -->
+      <header class="dashboard-header">
+        <div class="header-left">
+          <h1><i class="fas fa-volume-up"></i> Actuator Control Dashboard</h1>
+          <div class="system-status" id="systemStatus">
+            <span class="status-indicator" id="statusIndicator"></span>
+            <span id="statusText">Connecting...</span>
+          </div>
+        </div>
+        <div class="header-right">
+          <div class="controls">
+            <button class="btn btn-secondary" id="refreshBtn">
+              <i class="fas fa-sync-alt"></i> Refresh
+            </button>
+            <button class="btn btn-secondary" onclick="window.close()">
+              <i class="fas fa-times"></i> Close
+            </button>
+          </div>
+          <div class="timestamp" id="lastUpdate">Last Update: --</div>
+        </div>
+      </header>
+
+      <!-- Overview Section -->
+      <section class="overview-section">
+        <div class="overview-cards">
+          <div class="card overview-card">
+            <div class="card-icon zones-icon">
+              <i class="fas fa-building"></i>
+            </div>
+            <div class="card-content">
+              <h3>Zones</h3>
+              <div class="stats">
+                <span class="stat-value" id="totalZones">--</span>
+                <span class="stat-label">Total</span>
+              </div>
+              <div class="status-breakdown">
+                <span class="online" id="onlineZones">-- Online</span>
+                <span class="offline" id="offlineZones">-- Offline</span>
+              </div>
+            </div>
+          </div>
+
+          <div class="card overview-card">
+            <div class="card-icon actuators-icon">
+              <i class="fas fa-volume-up"></i>
+            </div>
+            <div class="card-content">
+              <h3>Actuators</h3>
+              <div class="stats">
+                <span class="stat-value" id="totalActuators">--</span>
+                <span class="stat-label">Total</span>
+              </div>
+              <div class="status-breakdown">
+                <span class="active" id="activeActuators">-- Active</span>
+                <span class="inactive" id="inactiveActuators">-- Inactive</span>
+              </div>
+            </div>
+          </div>
+
+          <div class="card overview-card">
+            <div class="card-icon alerts-icon">
+              <i class="fas fa-exclamation-triangle"></i>
+            </div>
+            <div class="card-content">
+              <h3>Alerts</h3>
+              <div class="stats">
+                <span class="stat-value" id="activeAlerts">--</span>
+                <span class="stat-label">Active</span>
+              </div>
+              <div class="status-breakdown">
+                <span class="critical" id="criticalAlerts">-- Critical</span>
+                <span class="warning" id="warningAlerts">-- Warning</span>
+              </div>
+            </div>
+          </div>
+
+          <div class="card overview-card">
+            <div class="card-icon health-icon">
+              <i class="fas fa-heartbeat"></i>
+            </div>
+            <div class="card-content">
+              <h3>System Health</h3>
+              <div class="stats">
+                <span class="stat-value" id="systemHealth">--</span>
+                <span class="stat-label">Status</span>
+              </div>
+              <div class="health-bar">
+                <div class="health-progress" id="healthProgress"></div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </section>
+
+      <!-- Zone Sections -->
+      <main class="main-content">
+        <div class="zones-container" id="zonesContainer">
+          <!-- Zone cards will be dynamically generated here -->
+        </div>
+      </main>
+
+      <!-- Actuator Control Modal -->
+      <div class="modal" id="actuatorModal">
+        <div class="modal-content">
+          <div class="modal-header">
+            <h2><i class="fas fa-cogs"></i> Actuator Control</h2>
+            <span class="close" id="closeActuatorModal">&times;</span>
+          </div>
+          <div class="modal-body">
+            <div class="actuator-info">
+              <h3 id="modalActuatorZone">Zone Name</h3>
+              <p id="modalActuatorType">Actuator Type</p>
+            </div>
+
+            <div class="actuator-controls-modal" id="actuatorControls">
+              <!-- Dynamic actuator controls will be inserted here -->
+            </div>
+
+            <div class="modal-actions">
+              <button class="btn btn-primary" id="sendActuatorCommandBtn">
+                <i class="fas fa-paper-plane"></i> Send Command
+              </button>
+              <button class="btn btn-secondary" id="cancelActuatorBtn">
+                <i class="fas fa-times"></i> Cancel
+              </button>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <script>
+      // Global variables
+      let dashboardConfig = {
+        updateInterval: 5000,
+        alertsEnabled: true,
+        autoRefresh: true,
+      };
+
+      let allZonesData = {};
+      let currentActuatorModal = null;
+      let updateTimer = null;
+
+      // Initialize dashboard
+      document.addEventListener("DOMContentLoaded", function () {
+        initializeActuatorDashboard();
+        setupEventListeners();
+        startAutoUpdate();
+      });
+
+      // Setup event listeners
+      function setupEventListeners() {
+        // Header controls
+        document
+          .getElementById("refreshBtn")
+          .addEventListener("click", updateDashboard);
+
+        // Modal controls
+        document
+          .getElementById("closeActuatorModal")
+          .addEventListener("click", closeActuatorModal);
+
+        // Actuator modal controls
+        document
+          .getElementById("sendActuatorCommandBtn")
+          .addEventListener("click", sendActuatorCommand);
+        document
+          .getElementById("cancelActuatorBtn")
+          .addEventListener("click", closeActuatorModal);
+
+        // Close modals when clicking outside
+        window.addEventListener("click", function (event) {
+          if (event.target.classList.contains("modal")) {
+            event.target.style.display = "none";
+          }
+        });
+      }
+
+      // Initialize dashboard
+      async function initializeActuatorDashboard() {
+        showNotification("Actuator Dashboard initializing...", "info");
+        await updateDashboard();
+      }
+
+      // Update dashboard data
+      async function updateDashboard() {
+        try {
+          updateSystemStatus("loading");
+
+          // Fetch system status
+          const systemResponse = await fetch("/api/system/status");
+          const systemData = await systemResponse.json();
+          updateSystemOverview(systemData);
+
+          // Fetch zones data
+          const zonesResponse = await fetch("/api/zones");
+          allZonesData = await zonesResponse.json();
+          renderZones();
+
+          updateSystemStatus("online");
+          document.getElementById(
+            "lastUpdate"
+          ).textContent = `Last Update: ${new Date().toLocaleTimeString()}`;
+        } catch (error) {
+          console.error("Error updating dashboard:", error);
+          updateSystemStatus("error");
+          showNotification("Error updating dashboard data", "error");
+        }
+      }
+
+      // Update system status indicator
+      function updateSystemStatus(status) {
+        const indicator = document.getElementById("statusIndicator");
+        const statusText = document.getElementById("statusText");
+
+        indicator.className = "status-indicator";
+
+        switch (status) {
+          case "online":
+            indicator.classList.add("online");
+            statusText.textContent = "System Online";
+            break;
+          case "warning":
+            indicator.classList.add("warning");
+            statusText.textContent = "System Warning";
+            break;
+          case "error":
+            indicator.classList.add("danger");
+            statusText.textContent = "System Error";
+            break;
+          case "loading":
+            indicator.classList.add("loading");
+            statusText.textContent = "Loading...";
+            break;
+        }
+      }
+
+      // Update system overview cards
+      function updateSystemOverview(systemData) {
+        document.getElementById("totalZones").textContent =
+          systemData.zones.total;
+        document.getElementById(
+          "onlineZones"
+        ).textContent = `${systemData.zones.online} Online`;
+        document.getElementById(
+          "offlineZones"
+        ).textContent = `${systemData.zones.offline} Offline`;
+
+        // Update actuator information
+        if (systemData.actuators) {
+          document.getElementById("totalActuators").textContent =
+            systemData.actuators.total;
+          document.getElementById(
+            "activeActuators"
+          ).textContent = `${systemData.actuators.active} Active`;
+          document.getElementById(
+            "inactiveActuators"
+          ).textContent = `${systemData.actuators.inactive} Inactive`;
+        }
+
+        // Mock alert data for now
+        document.getElementById("activeAlerts").textContent = "0";
+        document.getElementById("criticalAlerts").textContent = "0 Critical";
+        document.getElementById("warningAlerts").textContent = "0 Warning";
+
+        document.getElementById("systemHealth").textContent =
+          systemData.systemHealth.toUpperCase();
+
+        // Update health bar
+        const healthProgress = document.getElementById("healthProgress");
+        const healthPercentage =
+          (systemData.zones.online / systemData.zones.total) * 100;
+        healthProgress.style.width = `${healthPercentage}%`;
+
+        if (healthPercentage === 100) {
+          healthProgress.style.background =
+            "linear-gradient(90deg, #28a745 0%, #20c997 100%)";
+        } else if (healthPercentage >= 50) {
+          healthProgress.style.background =
+            "linear-gradient(90deg, #ffc107 0%, #fd7e14 100%)";
+        } else {
+          healthProgress.style.background =
+            "linear-gradient(90deg, #dc3545 0%, #e55353 100%)";
+        }
+      }
+
+      // Render zones
+      function renderZones() {
+        const container = document.getElementById("zonesContainer");
+        container.innerHTML = "";
+
+        Object.entries(allZonesData).forEach(([zoneName, zoneData]) => {
+          const zoneCard = createZoneCard(zoneName, zoneData);
+          container.appendChild(zoneCard);
+        });
+      }
+
+      // Create zone card focused on actuators
+      function createZoneCard(zoneName, zoneData) {
+        const card = document.createElement("div");
+        card.className = "card zone-card";
+
+        const actuators = zoneData.actuators || [];
+        const actuatorsByType = groupActuatorsByType(actuators);
+
+        // Count active actuators
+        const activeActuators = actuators.filter((actuator) => {
+          if (actuator.deviceType === "siren") {
+            return actuator.active === true;
+          } else if (actuator.deviceType === "beacon") {
+            return actuator.data?.beaconStatus === "ON";
+          }
+          return false;
+        }).length;
+
+        card.innerHTML = `
+          <div class="zone-header">
+              <h3 class="zone-title">
+                  <i class="fas fa-building"></i>
+                  ${zoneData.name || zoneName.replace(/_/g, " ").toUpperCase()}
+              </h3>
+              <span class="zone-status ${
+                zoneData.status
+              }">${zoneData.status.toUpperCase()}</span>
+          </div>
+          <div class="zone-body">
+              <div class="zone-stats">
+                  <div class="zone-stat">
+                      <div class="zone-stat-value">${actuators.length}</div>
+                      <div class="zone-stat-label">Actuators</div>
+                  </div>
+                  <div class="zone-stat">
+                      <div class="zone-stat-value">${
+                        Object.keys(actuatorsByType).length
+                      }</div>
+                      <div class="zone-stat-label">Types</div>
+                  </div>
+                  <div class="zone-stat">
+                      <div class="zone-stat-value">${activeActuators}</div>
+                      <div class="zone-stat-label">Active</div>
+                  </div>
+              </div>
+              
+              ${
+                actuators.length > 0
+                  ? `
+                  <div class="actuators-list">
+                      <h4><i class="fas fa-volume-up"></i> Actuators</h4>
+                      ${actuators
+                        .map((actuator) =>
+                          createActuatorItem(actuator, zoneName)
+                        )
+                        .join("")}
+                  </div>
+              `
+                  : '<div class="actuators-list"><h4><i class="fas fa-volume-up"></i> Actuators</h4><p class="text-center">No actuators available</p></div>'
+              }
+              
+              <div class="actuator-controls">
+                  <h4><i class="fas fa-cogs"></i> Zone Controls</h4>
+                  <div class="actuator-buttons">
+                      <button class="btn btn-warning btn-sm" onclick="openActuatorModal('${zoneName}', 'siren')">
+                          <i class="fas fa-volume-up"></i> Control Siren
+                      </button>
+                      <button class="btn btn-info btn-sm" onclick="openActuatorModal('${zoneName}', 'beacon')">
+                          <i class="fas fa-lightbulb"></i> Control Beacon
+                      </button>
+                  </div>
+              </div>
+          </div>
+        `;
+
+        return card;
+      }
+
+      // Group actuators by type
+      function groupActuatorsByType(actuators) {
+        return actuators.reduce((groups, actuator) => {
+          const type = actuator.deviceType;
+          if (!groups[type]) {
+            groups[type] = [];
+          }
+          groups[type].push(actuator);
+          return groups;
+        }, {});
+      }
+
+      // Create actuator item
+      function createActuatorItem(actuator) {
+        let isActive = false;
+        let statusText = "Inactive";
+        let statusClass = "inactive";
+        let statusDetails = "";
+
+        if (actuator.deviceType === "siren") {
+          isActive = actuator.active === true;
+          statusText = isActive ? "Active" : "Inactive";
+          statusClass = isActive ? "active" : "inactive";
+          if (isActive) {
+            statusDetails = `${actuator.pattern || "Unknown"} • ${
+              actuator.volume || 0
+            }%`;
+          }
+        } else if (actuator.deviceType === "beacon") {
+          isActive = actuator.data?.beaconStatus === "ON";
+          statusText = isActive ? "On" : "Off";
+          statusClass = isActive ? "active" : "inactive";
+          if (isActive) {
+            statusDetails = `${actuator.data?.color || "Unknown"} • ${
+              actuator.data?.lightPattern || "Unknown"
+            }`;
+          }
+        }
+
+        return `
+          <div class="actuator-item">
+              <div class="actuator-info">
+                  <div class="actuator-id">
+                      <span class="actuator-status ${statusClass}"></span>
+                      ${actuator.sirenId || actuator.beaconId || "Unknown"}
+                  </div>
+                  <div class="actuator-type">${
+                    actuator.model || actuator.deviceType
+                  }</div>
+                  <div class="actuator-location">${actuator.location}</div>
+                  <div class="actuator-status-text">
+                      <strong>Status:</strong> ${statusText}
+                      ${statusDetails ? ` • ${statusDetails}` : ""}
+                  </div>
+              </div>
+          </div>
+        `;
+      }
+
+      // Open actuator modal
+      window.openActuatorModal = function (zoneName, actuatorType) {
+        currentActuatorModal = { zoneName, actuatorType };
+
+        document.getElementById("modalActuatorZone").textContent = zoneName
+          .replace(/_/g, " ")
+          .toUpperCase();
+        document.getElementById("modalActuatorType").textContent =
+          actuatorType.toUpperCase();
+
+        generateActuatorControls(actuatorType);
+        document.getElementById("actuatorModal").style.display = "block";
+      };
+
+      // Generate actuator controls
+      function generateActuatorControls(actuatorType) {
+        const container = document.getElementById("actuatorControls");
+
+        if (actuatorType === "siren") {
+          container.innerHTML = `
+            <div class="form-group">
+                <label for="sirenActive">Active:</label>
+                <select id="sirenActive">
+                    <option value="true">On</option>
+                    <option value="false">Off</option>
+                </select>
+            </div>
+            <div class="form-group">
+                <label for="sirenVolume">Volume (%):</label>
+                <input type="number" id="sirenVolume" min="0" max="100" value="50">
+            </div>
+            <div class="form-group">
+                <label for="sirenTone">Tone:</label>
+                <select id="sirenTone">
+                    <option value="continuous">Continuous</option>
+                    <option value="pulsed">Pulsed</option>
+                    <option value="warble">Warble</option>
+                </select>
+            </div>
+          `;
+        } else if (actuatorType === "beacon") {
+          container.innerHTML = `
+            <div class="form-group">
+                <label for="beaconActive">Active:</label>
+                <select id="beaconActive">
+                    <option value="true">On</option>
+                    <option value="false">Off</option>
+                </select>
+            </div>
+            <div class="form-group">
+                <label for="beaconColor">Color:</label>
+                <select id="beaconColor">
+                    <option value="RED">Red</option>
+                    <option value="GREEN">Green</option>
+                    <option value="BLUE">Blue</option>
+                    <option value="YELLOW">Yellow</option>
+                </select>
+            </div>
+            <div class="form-group">
+                <label for="beaconPattern">Pattern:</label>
+                <select id="beaconPattern">
+                    <option value="STEADY">Steady</option>
+                    <option value="FLASHING">Flashing</option>
+                    <option value="STROBE">Strobe</option>
+                </select>
+            </div>
+          `;
+        }
+      }
+
+      // Send actuator command
+      async function sendActuatorCommand() {
+        if (!currentActuatorModal) return;
+
+        const { zoneName, actuatorType } = currentActuatorModal;
+        let commandData = {};
+
+        if (actuatorType === "siren") {
+          commandData = {
+            active: document.getElementById("sirenActive").value === "true",
+            volume: parseInt(document.getElementById("sirenVolume").value),
+            pattern: document.getElementById("sirenTone").value,
+            timestamp: new Date().toISOString(),
+          };
+        } else if (actuatorType === "beacon") {
+          commandData = {
+            data: {
+              beaconStatus:
+                document.getElementById("beaconActive").value === "true"
+                  ? "ON"
+                  : "OFF",
+              color: document.getElementById("beaconColor").value,
+              lightPattern: document.getElementById("beaconPattern").value,
+            },
+            timestamp: new Date().toISOString(),
+          };
+        }
+
+        try {
+          const response = await fetch(
+            `/api/zones/${zoneName}/actuators/${actuatorType}/command`,
+            {
+              method: "POST",
+              headers: { "Content-Type": "application/json" },
+              body: JSON.stringify(commandData),
+            }
+          );
+
+          if (response.ok) {
+            showNotification(
+              `${actuatorType} command sent successfully`,
+              "success"
+            );
+            closeActuatorModal();
+            updateDashboard();
+          } else {
+            throw new Error("Command failed");
+          }
+        } catch (error) {
+          console.error("Error sending actuator command:", error);
+          showNotification("Error sending actuator command", "error");
+        }
+      }
+
+      // Close actuator modal
+      function closeActuatorModal() {
+        document.getElementById("actuatorModal").style.display = "none";
+        currentActuatorModal = null;
+      }
+
+      // Start auto update
+      function startAutoUpdate() {
+        if (updateTimer) {
+          clearInterval(updateTimer);
+        }
+        updateTimer = setInterval(
+          updateDashboard,
+          dashboardConfig.updateInterval
+        );
+      }
+
+      // Show notification
+      function showNotification(message, type = "info") {
+        console.log(`[${type.toUpperCase()}] ${message}`);
+      }
+    </script>
+  </body>
+</html>

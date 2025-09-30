@@ -1,0 +1,196 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Central Security Dashboard</title>
+    <link rel="stylesheet" href="style.css" />
+    <link
+      href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css"
+      rel="stylesheet"
+    />
+    <link
+      href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800&display=swap"
+      rel="stylesheet"
+    />
+  </head>
+  <body>
+    <div class="dashboard-container">
+      <!-- Header -->
+      <header class="dashboard-header">
+        <div class="header-left">
+          <h1>CENTRAL SECURITY DASHBOARD</h1>
+          <div class="system-status" id="systemStatus">
+            <span class="status-indicator" id="statusIndicator"></span>
+            <span id="statusText">Connecting...</span>
+          </div>
+        </div>
+        <div class="header-right">
+          <div class="controls">
+            <button class="btn btn-secondary" id="refreshBtn">
+              <i class="fas fa-sync-alt"></i> Refresh
+            </button>
+            <button class="btn btn-secondary" id="settingsBtn">
+              <i class="fas fa-cog"></i> Settings
+            </button>
+            <button class="btn btn-warning" id="actuatorDashboardBtn">
+              Actuator Dashboard
+            </button>
+          </div>
+          <div class="timestamp" id="lastUpdate">Last Update: --</div>
+        </div>
+      </header>
+
+      <!-- System Overview -->
+      <section class="overview-section">
+        <div class="overview-cards">
+          <div class="card overview-card">
+            <div class="card-icon zones-icon">
+              <i class="fas fa-building"></i>
+            </div>
+            <div class="card-content">
+              <h3>Zones</h3>
+              <div class="stats">
+                <span class="stat-value" id="totalZones">--</span>
+                <span class="stat-label">Total</span>
+              </div>
+              <div class="status-breakdown">
+                <span class="online" id="onlineZones">-- Online</span>
+                <span class="offline" id="offlineZones">-- Offline</span>
+              </div>
+            </div>
+          </div>
+
+          <div class="card overview-card">
+            <div class="card-icon sensors-icon">
+              <i class="fas fa-satellite-dish"></i>
+            </div>
+            <div class="card-content">
+              <h3>Sensors</h3>
+              <div class="stats">
+                <span class="stat-value" id="totalSensors">--</span>
+                <span class="stat-label">Total</span>
+              </div>
+            </div>
+          </div>
+
+          <div class="card overview-card">
+            <div class="card-icon alerts-icon">
+              <i class="fas fa-exclamation-triangle"></i>
+            </div>
+            <div class="card-content">
+              <h3>Alerts</h3>
+              <div class="stats">
+                <span class="stat-value" id="activeAlerts">--</span>
+                <span class="stat-label">Active</span>
+              </div>
+              <div class="status-breakdown">
+                <span class="critical" id="criticalAlerts">-- Critical</span>
+                <span class="warning" id="warningAlerts">-- Warning</span>
+              </div>
+            </div>
+          </div>
+
+          <div class="card overview-card">
+            <div class="card-icon health-icon">
+              <i class="fas fa-heartbeat"></i>
+            </div>
+            <div class="card-content">
+              <h3>System Health</h3>
+              <div class="stats">
+                <span class="stat-value" id="systemHealth">--</span>
+                <span class="stat-label">Status</span>
+              </div>
+              <div class="health-bar">
+                <div class="health-progress" id="healthProgress"></div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </section>
+
+      <!-- Zone Sections -->
+      <main class="main-content">
+        <div class="zones-container" id="zonesContainer">
+          <!-- Zone cards will be dynamically generated here -->
+        </div>
+      </main>
+
+      <!-- Settings Modal -->
+      <div class="modal" id="settingsModal">
+        <div class="modal-content">
+          <div class="modal-header">
+            <h2><i class="fas fa-cog"></i> Dashboard Settings</h2>
+            <span class="close" id="closeSettingsModal">&times;</span>
+          </div>
+          <div class="modal-body">
+            <div class="form-group">
+              <label for="updateInterval">Update Interval (seconds):</label>
+              <input
+                type="number"
+                id="updateInterval"
+                min="1"
+                max="60"
+                value="5"
+              />
+            </div>
+            <div class="form-group">
+              <label>
+                <input type="checkbox" id="alertsEnabled" />
+                Enable Alerts
+              </label>
+            </div>
+            <div class="form-group">
+              <label>
+                <input type="checkbox" id="autoRefresh" />
+                Auto Refresh
+              </label>
+            </div>
+          </div>
+          <div class="modal-footer">
+            <button class="btn btn-primary" id="saveSettingsBtn">
+              <i class="fas fa-save"></i> Save
+            </button>
+            <button class="btn btn-secondary" id="cancelSettingsBtn">
+              <i class="fas fa-times"></i> Cancel
+            </button>
+          </div>
+        </div>
+      </div>
+
+      <!-- Actuator Control Modal -->
+      <div class="modal" id="actuatorModal">
+        <div class="modal-content">
+          <div class="modal-header">
+            <h2><i class="fas fa-cogs"></i> Actuator Control</h2>
+            <span class="close" id="closeActuatorModal">&times;</span>
+          </div>
+          <div class="modal-body">
+            <div class="actuator-info">
+              <h3 id="modalActuatorZone">Zone Name</h3>
+              <p id="modalActuatorType">Actuator Type</p>
+            </div>
+
+            <div class="actuator-controls-modal" id="actuatorControls">
+              <!-- Dynamic actuator controls will be inserted here -->
+            </div>
+
+            <div class="modal-actions">
+              <button class="btn btn-primary" id="sendActuatorCommandBtn">
+                <i class="fas fa-paper-plane"></i> Send Command
+              </button>
+              <button class="btn btn-secondary" id="cancelActuatorBtn">
+                <i class="fas fa-times"></i> Cancel
+              </button>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <!-- Notification Container -->
+    <div id="notificationContainer" class="notification-container"></div>
+
+    <script src="script.js"></script>
+  </body>
+</html>

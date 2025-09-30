@@ -109,18 +109,128 @@ class SecuritySystemOrchestrator {
     });
 
     // GET endpoint to stop all zones
-    this.app.get("/stop", (req, res) => {
+    this.app.get("/stop", async (req, res) => {
       if (!this.isRunning) {
         return res.status(400).json({
           error: "Security system is not running",
         });
       }
 
-      this.stopAllZones();
+      try {
+        const result = await this.stopAllZones();
+        res.json({
+          message: "Security system shutdown completed",
+          ...result,
+          note: "All processes have been terminated. Check the results for details.",
+        });
+      } catch (error) {
+        res.status(500).json({
+          error: "Failed to stop security system",
+          details: error.message,
+        });
+      }
+    });
+
+    // GET endpoint to check if processes are actually running
+    this.app.get("/check-processes", async (req, res) => {
+      if (!this.isRunning) {
+        return res.status(400).json({
+          error: "Security system is not running",
+        });
+      }
+
+      const processChecks = await Promise.all(
+        this.processes.map(async (proc) => {
+          const isRunning = await this.isProcessRunning(proc.pid);
+          const portStatus = await this.checkPortStatus(proc.port);
+
+          return {
+            name: proc.name,
+            pid: proc.pid,
+            port: proc.port,
+            processRunning: isRunning,
+            portActive: portStatus.active,
+            portResponse: portStatus.response,
+            healthCheck: portStatus.healthCheck,
+          };
+        })
+      );
+
+      const allRunning = processChecks.every(
+        (p) => p.processRunning && p.portActive
+      );
+
       res.json({
-        message: "Security system shutdown initiated",
-        note: "Individual zone windows may remain open and need manual closure",
+        message: "Process status check complete",
+        allProcessesRunning: allRunning,
+        totalProcesses: this.processes.length,
+        runningProcesses: processChecks.filter((p) => p.processRunning).length,
+        activeports: processChecks.filter((p) => p.portActive).length,
+        processes: processChecks,
+        timestamp: new Date().toISOString(),
       });
+    });
+
+    // GET endpoint to force kill all processes (emergency stop)
+    this.app.get("/force-stop", async (req, res) => {
+      if (!this.isRunning) {
+        return res.status(400).json({
+          error: "Security system is not running",
+        });
+      }
+
+      try {
+        const forceResults = [];
+
+        for (const processInfo of this.processes) {
+          try {
+            const { name, pid } = processInfo;
+            console.log(`Force killing ${name} (PID: ${pid})...`);
+
+            // Force kill the process
+            process.kill(pid, "SIGKILL");
+
+            // Also try to kill the entire process tree
+            await this.killProcessTree(pid);
+
+            // Check if it's really dead
+            await this.sleep(1000);
+            const stillRunning = await this.isProcessRunning(pid);
+
+            forceResults.push({
+              name,
+              pid,
+              success: !stillRunning,
+              method: "SIGKILL",
+            });
+          } catch (error) {
+            forceResults.push({
+              name: processInfo.name,
+              pid: processInfo.pid,
+              success: false,
+              error: error.message,
+            });
+          }
+        }
+
+        this.isRunning = false;
+        this.processes = [];
+        this.officeFloors = 0;
+
+        res.json({
+          message: "Force termination completed",
+          results: forceResults,
+          totalKilled: forceResults.filter((r) => r.success).length,
+          totalFailed: forceResults.filter((r) => !r.success).length,
+          warning:
+            "This was a forceful termination. Some processes may have been left in an inconsistent state.",
+        });
+      } catch (error) {
+        res.status(500).json({
+          error: "Failed to force stop security system",
+          details: error.message,
+        });
+      }
     });
 
     // Root endpoint with instructions
@@ -130,7 +240,10 @@ class SecuritySystemOrchestrator {
         quickStart: {
           startSystem: "GET /start/5 (starts system with 5 office floors)",
           checkStatus: "GET /status",
-          stopSystem: "GET /stop",
+          checkProcesses:
+            "GET /check-processes (verify if terminals are running)",
+          stopSystem: "GET /stop (graceful shutdown)",
+          forceStop: "GET /force-stop (emergency kill all processes)",
           getInfo: "GET /info",
         },
         currentStatus: {
@@ -233,11 +346,137 @@ class SecuritySystemOrchestrator {
     return endpoints;
   }
 
-  stopAllZones() {
+  async stopAllZones() {
+    console.log("\n System shutdown initiated via API");
+    console.log("Terminating all zone processes...");
+
+    const terminationResults = [];
+
+    for (const processInfo of this.processes) {
+      try {
+        const result = await this.terminateProcess(processInfo);
+        terminationResults.push(result);
+      } catch (error) {
+        terminationResults.push({
+          name: processInfo.name,
+          pid: processInfo.pid,
+          success: false,
+          error: error.message,
+        });
+      }
+    }
+
     this.isRunning = false;
     this.processes = [];
     this.officeFloors = 0;
-    console.log("\n System shutdown initiated via API");
+
+    return {
+      message: "All zones shutdown completed",
+      results: terminationResults,
+      totalTerminated: terminationResults.filter((r) => r.success).length,
+      totalFailed: terminationResults.filter((r) => !r.success).length,
+    };
+  }
+
+  // Helper method to terminate a specific process and its children
+  async terminateProcess(processInfo) {
+    const { name, pid, process } = processInfo;
+
+    console.log(`Terminating ${name} (PID: ${pid})...`);
+
+    try {
+      // First, try to gracefully terminate the process
+      if (process && !process.killed) {
+        process.kill("SIGTERM");
+
+        // Wait a bit for graceful shutdown
+        await this.sleep(2000);
+
+        // Check if still running
+        const stillRunning = await this.isProcessRunning(pid);
+        if (stillRunning) {
+          console.log(`${name} didn't respond to SIGTERM, using SIGKILL...`);
+          process.kill("SIGKILL");
+        }
+      } else {
+        // Process object not available, try to kill by PID
+        try {
+          process.kill(pid, "SIGTERM");
+          await this.sleep(2000);
+
+          const stillRunning = await this.isProcessRunning(pid);
+          if (stillRunning) {
+            console.log(`${name} didn't respond to SIGTERM, using SIGKILL...`);
+            process.kill(pid, "SIGKILL");
+          }
+        } catch (killError) {
+          // Process might already be dead
+          console.log(
+            `Process ${name} (PID: ${pid}) might already be terminated`
+          );
+        }
+      }
+
+      // Also try to kill any child processes (Node.js servers spawned by the shell script)
+      try {
+        await this.killProcessTree(pid);
+      } catch (treeError) {
+        console.log(
+          `Warning: Could not kill process tree for ${name}: ${treeError.message}`
+        );
+      }
+
+      // Final check
+      const finalCheck = await this.isProcessRunning(pid);
+
+      console.log(`${name} termination: ${finalCheck ? "FAILED" : "SUCCESS"}`);
+
+      return {
+        name,
+        pid,
+        success: !finalCheck,
+        method: finalCheck ? "failed" : "terminated",
+      };
+    } catch (error) {
+      console.log(`Error terminating ${name}: ${error.message}`);
+      return {
+        name,
+        pid,
+        success: false,
+        error: error.message,
+      };
+    }
+  }
+
+  // Helper method to kill process tree (parent and children)
+  async killProcessTree(pid) {
+    try {
+      const { spawn } = await import("child_process");
+
+      // On Linux/Ubuntu, use pkill to kill process group
+      return new Promise((resolve, reject) => {
+        const killProcess = spawn("pkill", ["-P", pid.toString()], {
+          stdio: "ignore",
+        });
+
+        killProcess.on("close", (code) => {
+          // pkill returns 1 if no processes matched, which is okay
+          resolve(code);
+        });
+
+        killProcess.on("error", (error) => {
+          reject(error);
+        });
+
+        // Timeout after 5 seconds
+        setTimeout(() => {
+          killProcess.kill();
+          resolve(1);
+        }, 5000);
+      });
+    } catch (error) {
+      console.log(`Could not kill process tree: ${error.message}`);
+    }
   }
 
   async getOfficeFloorsInput() {
@@ -521,6 +760,79 @@ class SecuritySystemOrchestrator {
 
   sleep(ms) {
     return new Promise((resolve) => setTimeout(resolve, ms));
+  }
+
+  // Helper method to check if a process is running
+  async isProcessRunning(pid) {
+    try {
+      // Use kill with signal 0 to check if process exists
+      process.kill(pid, 0);
+      return true;
+    } catch (error) {
+      return false;
+    }
+  }
+
+  // Helper method to check if a port is active and responding
+  async checkPortStatus(port) {
+    try {
+      const axios = await import("axios");
+
+      // Try to make a health check request
+      const response = await axios.default.get(
+        `http://localhost:${port}/health`,
+        {
+          timeout: 3000,
+        }
+      );
+
+      return {
+        active: true,
+        response: response.status,
+        healthCheck: response.data || "OK",
+      };
+    } catch (error) {
+      // Try a basic connection test
+      try {
+        const net = await import("net");
+        return new Promise((resolve) => {
+          const socket = new net.default.Socket();
+          const timeout = setTimeout(() => {
+            socket.destroy();
+            resolve({
+              active: false,
+              response: "timeout",
+              healthCheck: "Port not responding",
+            });
+          }, 2000);
+
+          socket.connect(port, "localhost", () => {
+            clearTimeout(timeout);
+            socket.destroy();
+            resolve({
+              active: true,
+              response: "connected",
+              healthCheck: "Port active but no HTTP response",
+            });
+          });
+
+          socket.on("error", () => {
+            clearTimeout(timeout);
+            resolve({
+              active: false,
+              response: "connection_refused",
+              healthCheck: "Port not active",
+            });
+          });
+        });
+      } catch (netError) {
+        return {
+          active: false,
+          response: "error",
+          healthCheck: `Connection error: ${error.message}`,
+        };
+      }
+    }
   }
 }
 
