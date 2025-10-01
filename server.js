@@ -105,7 +105,40 @@ class SecuritySystemOrchestrator {
         })),
         healthUrls: this.isRunning ? this.getHealthUrls() : [],
         commandEndpoints: this.isRunning ? this.getCommandEndpoints() : [],
+        debugInfo: {
+          isRunningFlag: this.isRunning,
+          processCount: this.processes.length,
+          officeFloors: this.officeFloors,
+          timestamp: new Date().toISOString(),
+        },
       });
+    });
+
+    // GET endpoint to manually set system as running (debug/recovery)
+    this.app.get("/set-running/:status", (req, res) => {
+      const status = req.params.status.toLowerCase();
+
+      if (status === "true" || status === "1") {
+        this.isRunning = true;
+        res.json({
+          message: "System status manually set to RUNNING",
+          isRunning: this.isRunning,
+          activeProcesses: this.processes.length,
+          note: "Use this endpoint only if terminals are running but status shows false",
+        });
+      } else if (status === "false" || status === "0") {
+        this.isRunning = false;
+        res.json({
+          message: "System status manually set to NOT RUNNING",
+          isRunning: this.isRunning,
+          note: "System marked as stopped",
+        });
+      } else {
+        res.status(400).json({
+          error: "Invalid status. Use 'true' or 'false'",
+          examples: ["/set-running/true", "/set-running/false"],
+        });
+      }
     });
 
     // GET endpoint to stop all zones
@@ -233,6 +266,75 @@ class SecuritySystemOrchestrator {
       }
     });
 
+    // GET endpoint to auto-sync status based on running terminals
+    this.app.get("/sync-status", async (req, res) => {
+      try {
+        // Check if web servers are responding on expected ports
+        const expectedPorts = [3000, 3001, 3100]; // Fixed zones
+
+        // Add office floor ports if we have office floors configured
+        for (let i = 1; i <= this.officeFloors; i++) {
+          expectedPorts.push(BASE_OFFICE_PORT + i - 1);
+        }
+
+        const portChecks = await Promise.all(
+          expectedPorts.map(async (port) => {
+            const status = await this.checkPortStatus(port);
+            return { port, active: status.active };
+          })
+        );
+
+        const activePorts = portChecks.filter((p) => p.active);
+        const shouldBeRunning = activePorts.length >= 3; // At least the 3 fixed zones
+
+        const previousStatus = this.isRunning;
+
+        if (shouldBeRunning && !this.isRunning) {
+          this.isRunning = true;
+
+          // If we don't have process tracking, try to discover them
+          if (this.processes.length === 0) {
+            FIXED_ZONES.forEach((zone) => {
+              this.processes.push({
+                name: zone.name,
+                port: zone.port,
+                pid: null, // Unknown PID
+                discoveredViaSync: true,
+              });
+            });
+
+            for (let i = 1; i <= this.officeFloors; i++) {
+              this.processes.push({
+                name: `Office Floor ${i}`,
+                port: BASE_OFFICE_PORT + i - 1,
+                pid: null,
+                discoveredViaSync: true,
+              });
+            }
+          }
+        }
+
+        res.json({
+          message: "Status synchronization complete",
+          previousStatus: previousStatus,
+          newStatus: this.isRunning,
+          statusChanged: previousStatus !== this.isRunning,
+          portChecks: portChecks,
+          activePorts: activePorts.length,
+          totalExpectedPorts: expectedPorts.length,
+          syncedProcesses: this.processes.length,
+          recommendation: shouldBeRunning
+            ? "System appears to be running"
+            : "System appears to be stopped",
+        });
+      } catch (error) {
+        res.status(500).json({
+          error: "Failed to sync status",
+          details: error.message,
+        });
+      }
+    });
+
     // Root endpoint with instructions
     this.app.get("/", (req, res) => {
       res.json({
@@ -240,16 +342,22 @@ class SecuritySystemOrchestrator {
         quickStart: {
           startSystem: "GET /start/5 (starts system with 5 office floors)",
           checkStatus: "GET /status",
+          syncStatus: "GET /sync-status (auto-detect if terminals are running)",
+          setRunning:
+            "GET /set-running/true (manually set status if terminals running)",
           checkProcesses:
             "GET /check-processes (verify if terminals are running)",
           stopSystem: "GET /stop (graceful shutdown)",
           forceStop: "GET /force-stop (emergency kill all processes)",
-          getInfo: "GET /info",
         },
         currentStatus: {
           isRunning: this.isRunning,
           activeZones: this.processes.length,
           officeFloors: this.officeFloors,
+        },
+        troubleshooting: {
+          statusFalseButTerminalsRunning:
+            "Use /sync-status or /set-running/true",
         },
       });
     });
