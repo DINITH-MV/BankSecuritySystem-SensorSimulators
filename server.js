@@ -143,17 +143,67 @@ class SecuritySystemOrchestrator {
 
     // GET endpoint to stop all zones
     this.app.get("/stop", async (req, res) => {
-      if (!this.isRunning) {
-        return res.status(400).json({
-          error: "Security system is not running",
-        });
-      }
-
       try {
+        // First check if any terminals are actually running on expected ports
+        const expectedPorts = [3000, 3001, 3100]; // Fixed zones
+        for (let i = 1; i <= this.officeFloors; i++) {
+          expectedPorts.push(BASE_OFFICE_PORT + i - 1);
+        }
+
+        const portChecks = await Promise.all(
+          expectedPorts.map(async (port) => {
+            const status = await this.checkPortStatus(port);
+            return { port, active: status.active };
+          })
+        );
+
+        const activePorts = portChecks.filter((p) => p.active);
+
+        if (!this.isRunning && activePorts.length === 0) {
+          return res.status(400).json({
+            error: "Security system is not running",
+            message: "No active terminals found on expected ports",
+            checkedPorts: expectedPorts,
+            activePorts: activePorts.length,
+          });
+        }
+
+        // If we have active ports but isRunning is false, try to sync first
+        if (!this.isRunning && activePorts.length > 0) {
+          console.log(
+            "⚠️  Terminals detected but status was false. Auto-syncing before shutdown..."
+          );
+
+          // Auto-sync the status and processes
+          this.isRunning = true;
+
+          if (this.processes.length === 0) {
+            FIXED_ZONES.forEach((zone) => {
+              this.processes.push({
+                name: zone.name,
+                port: zone.port,
+                pid: null, // Unknown PID
+                discoveredViaStop: true,
+              });
+            });
+
+            for (let i = 1; i <= this.officeFloors; i++) {
+              this.processes.push({
+                name: `Office Floor ${i}`,
+                port: BASE_OFFICE_PORT + i - 1,
+                pid: null,
+                discoveredViaStop: true,
+              });
+            }
+          }
+        }
+
         const result = await this.stopAllZones();
         res.json({
           message: "Security system shutdown completed",
           ...result,
+          portChecks: portChecks,
+          autoSynced: !this.isRunning && activePorts.length > 0,
           note: "All processes have been terminated. Check the results for details.",
         });
       } catch (error) {
@@ -206,42 +256,73 @@ class SecuritySystemOrchestrator {
 
     // GET endpoint to force kill all processes (emergency stop)
     this.app.get("/force-stop", async (req, res) => {
-      if (!this.isRunning) {
-        return res.status(400).json({
-          error: "Security system is not running",
-        });
-      }
-
       try {
         const forceResults = [];
 
-        for (const processInfo of this.processes) {
-          try {
-            const { name, pid } = processInfo;
-            console.log(`Force killing ${name} (PID: ${pid})...`);
+        // If we have tracked processes, use them
+        if (this.processes.length > 0) {
+          for (const processInfo of this.processes) {
+            try {
+              const { name, pid, port } = processInfo;
+              console.log(
+                `Force killing ${name} (PID: ${pid || "unknown"})...`
+              );
 
-            // Force kill the process
-            process.kill(pid, "SIGKILL");
+              let success = false;
 
-            // Also try to kill the entire process tree
-            await this.killProcessTree(pid);
+              if (pid && pid !== null) {
+                // Force kill the process by PID
+                try {
+                  process.kill(pid, "SIGKILL");
+                  await this.killProcessTree(pid);
+                  await this.sleep(1000);
+                  const stillRunning = await this.isProcessRunning(pid);
+                  success = !stillRunning;
+                } catch (error) {
+                  console.log(`Could not kill by PID: ${error.message}`);
+                }
+              }
 
-            // Check if it's really dead
-            await this.sleep(1000);
-            const stillRunning = await this.isProcessRunning(pid);
+              // If PID method failed or no PID, try port-based killing
+              if (!success && port) {
+                success = await this.killProcessesByPort(port, name);
+              }
 
+              forceResults.push({
+                name,
+                pid: pid || "unknown",
+                port,
+                success,
+                method: "SIGKILL",
+              });
+            } catch (error) {
+              forceResults.push({
+                name: processInfo.name,
+                pid: processInfo.pid || "unknown",
+                port: processInfo.port,
+                success: false,
+                error: error.message,
+              });
+            }
+          }
+        } else {
+          // No tracked processes, try to kill by known ports
+          console.log(
+            "No tracked processes found. Attempting to stop by known ports..."
+          );
+          const knownPorts = [3000, 3001, 3100, 3002, 3003, 3004, 3005, 3006];
+
+          for (const port of knownPorts) {
+            const success = await this.killProcessesByPort(
+              port,
+              `Port ${port} Process`
+            );
             forceResults.push({
-              name,
-              pid,
-              success: !stillRunning,
-              method: "SIGKILL",
-            });
-          } catch (error) {
-            forceResults.push({
-              name: processInfo.name,
-              pid: processInfo.pid,
-              success: false,
-              error: error.message,
+              name: `Unknown Process on Port ${port}`,
+              pid: "discovered",
+              port,
+              success,
+              method: "PORT_DISCOVERY_KILL",
             });
           }
         }
@@ -257,6 +338,10 @@ class SecuritySystemOrchestrator {
           totalFailed: forceResults.filter((r) => !r.success).length,
           warning:
             "This was a forceful termination. Some processes may have been left in an inconsistent state.",
+          note:
+            this.processes.length === 0
+              ? "Used port-based discovery since no processes were tracked"
+              : "Used tracked process information",
         });
       } catch (error) {
         res.status(500).json({
@@ -488,13 +573,18 @@ class SecuritySystemOrchestrator {
 
   // Helper method to terminate a specific process and its children
   async terminateProcess(processInfo) {
-    const { name, pid, process } = processInfo;
+    const { name, pid, process, port } = processInfo;
 
-    console.log(`Terminating ${name} (PID: ${pid})...`);
+    console.log(
+      `Terminating ${name} (PID: ${pid || "unknown"}, Port: ${port})...`
+    );
 
     try {
-      // First, try to gracefully terminate the process
-      if (process && !process.killed) {
+      let processKilled = false;
+
+      // Method 1: If we have a process object and PID, use it
+      if (process && pid && !process.killed) {
+        console.log(`  → Using process object for ${name}`);
         process.kill("SIGTERM");
 
         // Wait a bit for graceful shutdown
@@ -506,8 +596,12 @@ class SecuritySystemOrchestrator {
           console.log(`${name} didn't respond to SIGTERM, using SIGKILL...`);
           process.kill("SIGKILL");
         }
-      } else {
-        // Process object not available, try to kill by PID
+        processKilled = true;
+      }
+
+      // Method 2: If we have a PID but no process object
+      else if (pid && pid !== null) {
+        console.log(`  → Using PID ${pid} for ${name}`);
         try {
           process.kill(pid, "SIGTERM");
           await this.sleep(2000);
@@ -517,33 +611,57 @@ class SecuritySystemOrchestrator {
             console.log(`${name} didn't respond to SIGTERM, using SIGKILL...`);
             process.kill(pid, "SIGKILL");
           }
+          processKilled = true;
         } catch (killError) {
-          // Process might already be dead
           console.log(
-            `Process ${name} (PID: ${pid}) might already be terminated`
+            `Process ${name} (PID: ${pid}) might already be terminated: ${killError.message}`
           );
         }
       }
 
-      // Also try to kill any child processes (Node.js servers spawned by the shell script)
-      try {
-        await this.killProcessTree(pid);
-      } catch (treeError) {
+      // Method 3: If no PID available, try to kill by port-based process discovery
+      else {
         console.log(
-          `Warning: Could not kill process tree for ${name}: ${treeError.message}`
+          `  → No PID available for ${name}, attempting port-based termination on port ${port}`
         );
+        const killedByPort = await this.killProcessesByPort(port, name);
+        processKilled = killedByPort;
       }
 
-      // Final check
-      const finalCheck = await this.isProcessRunning(pid);
+      // Also try to kill any child processes (Node.js servers spawned by the shell script)
+      if (pid && pid !== null) {
+        try {
+          await this.killProcessTree(pid);
+        } catch (treeError) {
+          console.log(
+            `Warning: Could not kill process tree for ${name}: ${treeError.message}`
+          );
+        }
+      }
 
-      console.log(`${name} termination: ${finalCheck ? "FAILED" : "SUCCESS"}`);
+      // Final check - use port status if no PID available
+      let finalCheck = false;
+      if (pid && pid !== null) {
+        finalCheck = await this.isProcessRunning(pid);
+      } else {
+        // Check if port is still active as a proxy for process running
+        const portStatus = await this.checkPortStatus(port || processInfo.port);
+        finalCheck = portStatus.active;
+      }
+
+      const success = !finalCheck || processKilled;
+      console.log(`${name} termination: ${success ? "SUCCESS" : "FAILED"}`);
 
       return {
         name,
-        pid,
-        success: !finalCheck,
-        method: finalCheck ? "failed" : "terminated",
+        pid: pid || "unknown",
+        port: port || processInfo.port,
+        success: success,
+        method: processKilled
+          ? "terminated"
+          : finalCheck
+          ? "failed"
+          : "not_running",
       };
     } catch (error) {
       console.log(`Error terminating ${name}: ${error.message}`);
@@ -553,6 +671,80 @@ class SecuritySystemOrchestrator {
         success: false,
         error: error.message,
       };
+    }
+  }
+
+  // Helper method to kill processes by port when PID is unknown
+  async killProcessesByPort(port, zoneName) {
+    try {
+      const { spawn } = await import("child_process");
+
+      console.log(`  → Searching for processes using port ${port}...`);
+
+      // Find processes using the port
+      return new Promise((resolve) => {
+        const findProcess = spawn("lsof", ["-ti", `tcp:${port}`], {
+          stdio: ["ignore", "pipe", "pipe"],
+        });
+
+        let pids = "";
+        findProcess.stdout.on("data", (data) => {
+          pids += data.toString();
+        });
+
+        findProcess.on("close", async (code) => {
+          if (code === 0 && pids.trim()) {
+            const pidList = pids
+              .trim()
+              .split("\n")
+              .filter((pid) => pid.trim());
+            console.log(
+              `  → Found PIDs using port ${port}: ${pidList.join(", ")}`
+            );
+
+            let killedAny = false;
+            for (const pid of pidList) {
+              try {
+                console.log(`  → Killing PID ${pid} for ${zoneName}...`);
+                process.kill(parseInt(pid), "SIGTERM");
+                await this.sleep(1000);
+
+                // Check if still running, use SIGKILL if needed
+                const stillRunning = await this.isProcessRunning(parseInt(pid));
+                if (stillRunning) {
+                  console.log(`  → PID ${pid} still running, using SIGKILL...`);
+                  process.kill(parseInt(pid), "SIGKILL");
+                }
+                killedAny = true;
+              } catch (killError) {
+                console.log(
+                  `  → Could not kill PID ${pid}: ${killError.message}`
+                );
+              }
+            }
+            resolve(killedAny);
+          } else {
+            console.log(`  → No processes found using port ${port}`);
+            resolve(false);
+          }
+        });
+
+        findProcess.on("error", (error) => {
+          console.log(
+            `  → Error finding processes on port ${port}: ${error.message}`
+          );
+          resolve(false);
+        });
+
+        // Timeout after 10 seconds
+        setTimeout(() => {
+          findProcess.kill();
+          resolve(false);
+        }, 10000);
+      });
+    } catch (error) {
+      console.log(`Could not kill processes by port: ${error.message}`);
+      return false;
     }
   }
 
