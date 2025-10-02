@@ -5,8 +5,6 @@ const KEYPAD_CONFIGS = [
   { sensorId: "LOCK_H5_002", location: "Server Room B Secondary Access" },
 ];
 
-import axios from "axios";
-
 const serverUrl = "http://localhost:3100";
 
 const validCodes = ["851963", "427519", "986532", "741852"]; // 6-digit high security codes

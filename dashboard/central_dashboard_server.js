@@ -8,7 +8,7 @@ const __filename = fileURLToPath(import.meta.url);
 const __dirname = path.dirname(__filename);
 
 const app = express();
-const port = 5000;
+const port = 7000;
 
 // Middleware
 app.use(cors());
@@ -196,7 +196,7 @@ let randomSensorData = {};
 // Dashboard configuration
 let dashboardConfig = {
   randomDataEnabled: true,
-  updateInterval: 5000,
+  updateInterval: 7000,
   alertsEnabled: true,
 };
 

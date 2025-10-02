@@ -5,8 +5,6 @@ const MOTION_CONFIGS = [
   { sensorId: "MOTION_H5_016", location: "Executive Security Checkpoint" },
 ];
 
-import axios from "axios";
-
 const serverUrl = "http://localhost:3100";
 
 function generateMotionData(config) {
