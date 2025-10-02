@@ -16,7 +16,7 @@ function generateKeypadData(config) {
     lockStates[config.sensorId] = "locked";
   }
 
-  const codeEntered = Math.random() < 0.03; // 3% chance of code entry
+  const codeEntered = Math.random() < 0.4; // 3% chance of code entry
   let enteredCode = null;
   let accessGranted = false;
   let lockAction = null;

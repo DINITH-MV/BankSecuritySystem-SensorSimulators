@@ -14,7 +14,7 @@ const HONEYWELL_CONFIGS = [
 const serverUrl = "http://localhost:3015";
 
 function generateHoneywellData(config) {
-  const motionDetected = Math.random() < 0.1; // 10% chance of motion
+  const motionDetected = Math.random() < 0.4; // 10% chance of motion
   const temperature = Math.floor(Math.random() * 8) + 20; // 20-28°C
 
   const sensorData = {

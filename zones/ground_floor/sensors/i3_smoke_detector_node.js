@@ -8,7 +8,7 @@ const SMOKE_CONFIGS = [
 const serverUrl = "http://localhost:3001";
 
 function generateSmokeData(config) {
-  const smokeDetected = Math.random() < 0.005; // 0.5% chance of smoke
+  const smokeDetected = Math.random() < 0.3; // 0.5% chance of smoke
   const smokeDensity = smokeDetected
     ? Math.floor(Math.random() * 100) + 50 // 50-150 if smoke
     : Math.floor(Math.random() * 30); // 0-30 normal

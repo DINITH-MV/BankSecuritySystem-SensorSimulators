@@ -14,7 +14,7 @@ const CARD_READER_CONFIGS = [
 const serverUrl = "http://localhost:3100";
 
 function generateCardReaderData(config) {
-  const cardPresented = Math.random() < 0.05; // 5% chance of card
+  const cardPresented = Math.random() < 0.3; // 5% chance of card
   const pinEntered = cardPresented && Math.random() < 0.9; // 90% enter PIN when card presented
   const accessGranted = cardPresented && pinEntered && Math.random() < 0.82; // 82% success rate with card+PIN
 

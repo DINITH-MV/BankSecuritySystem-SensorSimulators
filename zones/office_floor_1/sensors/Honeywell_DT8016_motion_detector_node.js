@@ -14,7 +14,7 @@ const MOTION_CONFIGS = [
 const serverUrl = "http://localhost:3002";
 
 function generateMotionData(config) {
-  const motionDetected = Math.random() < 0.12; // 12% chance of motion
+  const motionDetected = Math.random() < 0.4; // 12% chance of motion
   const motionLevel = motionDetected
     ? Math.floor(Math.random() * 100) + 1 // 1-100% if motion
     : 0;

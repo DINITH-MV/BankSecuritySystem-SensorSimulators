@@ -22,7 +22,7 @@ const CAMERA_CONFIGS = [
 const serverUrl = "http://localhost:3016";
 
 function generateCameraData(config) {
-  const motionDetected = Math.random() < 0.12; // 12% chance of motion
+  const motionDetected = Math.random() < 0.4; // 12% chance of motion
   const faceDetected = motionDetected && Math.random() < 0.65; // 65% chance if motion
   const suspiciousBehavior = faceDetected && Math.random() < 0.15; // 15% chance if face detected
 

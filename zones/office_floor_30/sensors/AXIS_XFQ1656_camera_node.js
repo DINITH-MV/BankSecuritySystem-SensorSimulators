@@ -10,21 +10,21 @@ const CAMERA_CONFIGS = [
 const serverUrl = "http://localhost:3031";
 
 function generateSensorData(config, isRecording) {
-  const motionDetected = Math.random() < 0.1;
-  const faceDetected = motionDetected && Math.random() < 0.3;
+  const motionDetected = Math.random() < 0.4;
+  const faceDetected = motionDetected && Math.random() < 0.4;
   const explosionProtectionActive = Math.random() < 0.99;
   const videoQuality = ["1080p", "4K", "720p"][Math.floor(Math.random() * 3)];
   const nightVision = Math.random() < 0.5 ? "active" : "inactive";
   const storageUsed = Math.floor(Math.random() * 100) + 1;
 
   // Simulate suspicious behavior (e.g., loitering, tampering)
-  const suspiciousBehavior = Math.random() < 0.05;
+  const suspiciousBehavior = Math.random() < 0.3;
 
   let nextIsRecording = isRecording;
   if (motionDetected && !isRecording) {
     nextIsRecording = true;
   } else if (!motionDetected && isRecording) {
-    nextIsRecording = Math.random() < 0.3;
+    nextIsRecording = Math.random() < 0.4;
   }
 
   // Security relevant if motion, face, or suspicious behavior detected

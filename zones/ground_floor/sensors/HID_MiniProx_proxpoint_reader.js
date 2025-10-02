@@ -14,7 +14,7 @@ const CARD_READER_CONFIGS = [
 const serverUrl = "http://localhost:3001";
 
 function generateCardReaderData(config) {
-  const cardPresented = Math.random() < 0.05; // 5% chance of card
+  const cardPresented = Math.random() < 0.3; // 5% chance of card
   const accessGranted = cardPresented && Math.random() < 0.85; // 85% success rate
   const cardId = cardPresented
     ? `CARD_${Math.floor(Math.random() * 10000)

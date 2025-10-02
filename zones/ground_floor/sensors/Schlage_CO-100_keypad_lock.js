@@ -9,7 +9,7 @@ const serverUrl = "http://localhost:3001";
 
 function generateKeypadData(config) {
   const codeEntered = Math.random() < 0.04; // 4% chance of code entry
-  const accessGranted = codeEntered && Math.random() < 0.3; // 30% success rate
+  const accessGranted = codeEntered && Math.random() < 0.4; // 30% success rate
   const enteredCode = codeEntered
     ? Math.floor(Math.random() * 10000)
         .toString()

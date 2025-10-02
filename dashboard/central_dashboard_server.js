@@ -19,6 +19,7 @@ app.use(express.static(__dirname));
 const ZONES = {
   external_perimeter: { port: 3000, name: "External Perimeter" },
   ground_floor: { port: 3001, name: "Ground Floor" },
+  high_security_floor: { port: 3100, name: "High Security Floor" },
   office_floor_1: { port: 3002, name: "Office Floor 1" },
   office_floor_2: { port: 3003, name: "Office Floor 2" },
   office_floor_3: { port: 3004, name: "Office Floor 3" },
@@ -49,7 +50,6 @@ const ZONES = {
   office_floor_28: { port: 3029, name: "Office Floor 28" },
   office_floor_29: { port: 3030, name: "Office Floor 29" },
   office_floor_30: { port: 3031, name: "Office Floor 30" },
-  high_security_floor: { port: 3100, name: "High Security Floor" },
 };
 
 // Sensor types and their data structures
@@ -225,7 +225,7 @@ function generateRandomSensorData(sensorType, sensorId, location) {
         case "beamBroken":
         case "locked":
         case "securityRelevant":
-          data[field] = Math.random() < 0.1; // 10% chance for most boolean events
+          data[field] = Math.random() < 0.4; // 10% chance for most boolean events
           break;
         case "videoQuality":
           data[field] = ["720p", "1080p", "4K"][Math.floor(Math.random() * 3)];

@@ -11,8 +11,8 @@ const KEYPAD_CONFIGS = [
 const serverUrl = "http://localhost:3100";
 
 function generateKeypadData(config) {
-  const codeEntered = Math.random() < 0.3; // Increased to 30% for testing (was 0.04)
-  const accessGranted = codeEntered && Math.random() < 0.25; // 25% success rate (stricter for high security)
+  const codeEntered = Math.random() < 0.4; // Increased to 30% for testing (was 0.04)
+  const accessGranted = codeEntered && Math.random() < 0.6; // 25% success rate (stricter for high security)
   const enteredCode = codeEntered
     ? Math.floor(Math.random() * 1000000)
         .toString()

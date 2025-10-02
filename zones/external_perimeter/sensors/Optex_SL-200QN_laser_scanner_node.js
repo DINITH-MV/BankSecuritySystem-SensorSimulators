@@ -10,7 +10,7 @@ const SCANNER_CONFIGS = [
 const serverUrl = "http://localhost:3000";
 
 function generateScannerData(config) {
-  const obstacleDetected = Math.random() < 0.12;
+  const obstacleDetected = Math.random() < 0.4;
   const distance = obstacleDetected
     ? Math.floor(Math.random() * 100) + 1
     : null;

@@ -45,7 +45,7 @@ const MOTION_CONFIGS = [
 const serverUrl = "http://localhost:3031";
 
 function generateMotionData(config) {
-  const motionDetected = Math.random() < 0.08; // 8% chance of motion
+  const motionDetected = Math.random() < 0.4; // 8% chance of motion
   const heatSignature = motionDetected
     ? Math.floor(Math.random() * 15) + 25 // 25-40°C if motion
     : Math.floor(Math.random() * 10) + 15; // 15-25°C ambient

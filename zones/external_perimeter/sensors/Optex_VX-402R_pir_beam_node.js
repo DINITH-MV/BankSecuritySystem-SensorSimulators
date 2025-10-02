@@ -10,7 +10,7 @@ const BARRIER_CONFIGS = [
 const serverUrl = "http://localhost:3000";
 
 function generateBarrierData(config) {
-  const motionDetected = Math.random() < 0.12;
+  const motionDetected = Math.random() < 0.4;
   const beamBroken = motionDetected && Math.random() < 0.8;
   const temperature = Math.floor(Math.random() * 30) + 10;
   const batteryLevel = Math.floor(Math.random() * 100) + 1;
