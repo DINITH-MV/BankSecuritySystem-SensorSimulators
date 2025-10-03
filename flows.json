@@ -1,0 +1,2225 @@
+[
+    {
+        "id": "d100dcfe581502c7",
+        "type": "tab",
+        "label": "Flow 1",
+        "disabled": false,
+        "info": "",
+        "env": []
+    },
+    {
+        "id": "3ed97823cb618600",
+        "type": "mqtt in",
+        "z": "d100dcfe581502c7",
+        "name": "",
+        "topic": "bank_security/zone/+/sensors/Honeywell DT8016 DualTech/#",
+        "qos": "2",
+        "datatype": "auto-detect",
+        "broker": "9fb88f61108d1d18",
+        "nl": false,
+        "rap": true,
+        "rh": 0,
+        "inputs": 0,
+        "x": 280,
+        "y": 160,
+        "wires": [
+            [
+                "397a4d867acf3588"
+            ]
+        ]
+    },
+    {
+        "id": "fe3efc162f21fe30",
+        "type": "mqtt in",
+        "z": "d100dcfe581502c7",
+        "name": "",
+        "topic": "bank_security/zone/+/sensors/Bosch Blue Line PIR/#",
+        "qos": "2",
+        "datatype": "auto-detect",
+        "broker": "9fb88f61108d1d18",
+        "nl": false,
+        "rap": true,
+        "rh": 0,
+        "inputs": 0,
+        "x": 250,
+        "y": 240,
+        "wires": [
+            [
+                "397a4d867acf3588"
+            ]
+        ]
+    },
+    {
+        "id": "9e262fbfa64f28e6",
+        "type": "mqtt in",
+        "z": "d100dcfe581502c7",
+        "name": "",
+        "topic": "bank_security/zone/+/sensors/AXIS XFQ1656 Camera/#",
+        "qos": "2",
+        "datatype": "auto-detect",
+        "broker": "9fb88f61108d1d18",
+        "nl": false,
+        "rap": true,
+        "rh": 0,
+        "inputs": 0,
+        "x": 270,
+        "y": 1460,
+        "wires": [
+            [
+                "a1b6d34020356b40",
+                "4b9a790e29a05e72"
+            ]
+        ]
+    },
+    {
+        "id": "13e9c9dfa50a5d01",
+        "type": "mqtt in",
+        "z": "d100dcfe581502c7",
+        "name": "",
+        "topic": "bank_security/zone/+/sensors/Optex SL-200QN Laser Scanner/#",
+        "qos": "2",
+        "datatype": "auto-detect",
+        "broker": "9fb88f61108d1d18",
+        "nl": false,
+        "rap": true,
+        "rh": 0,
+        "inputs": 0,
+        "x": 290,
+        "y": 1720,
+        "wires": [
+            [
+                "f6ffbc1dd174037a"
+            ]
+        ]
+    },
+    {
+        "id": "6a6fe9430d8d56b3",
+        "type": "mqtt in",
+        "z": "d100dcfe581502c7",
+        "name": "",
+        "topic": "bank_security/zone/+/sensors/HID ProxPoint Plus Card Reader/#",
+        "qos": "2",
+        "datatype": "auto-detect",
+        "broker": "9fb88f61108d1d18",
+        "nl": false,
+        "rap": true,
+        "rh": 0,
+        "inputs": 0,
+        "x": 290,
+        "y": 400,
+        "wires": [
+            [
+                "0af59af90e7e7c2e"
+            ]
+        ]
+    },
+    {
+        "id": "a9a304ac6d597b08",
+        "type": "mqtt in",
+        "z": "d100dcfe581502c7",
+        "name": "",
+        "topic": "bank_security/zone/+/sensors/i3 Series Smoke Detector/#",
+        "qos": "2",
+        "datatype": "auto-detect",
+        "broker": "9fb88f61108d1d18",
+        "nl": false,
+        "rap": true,
+        "rh": 0,
+        "inputs": 0,
+        "x": 270,
+        "y": 920,
+        "wires": [
+            [
+                "c177ccc3be007c0f"
+            ]
+        ]
+    },
+    {
+        "id": "1c8fa89d20aa8ef0",
+        "type": "mqtt in",
+        "z": "d100dcfe581502c7",
+        "name": "",
+        "topic": "bank_security/zone/+/sensors/Schlage CO-100 Keypad Lock/#",
+        "qos": "2",
+        "datatype": "auto-detect",
+        "broker": "9fb88f61108d1d18",
+        "nl": false,
+        "rap": true,
+        "rh": 0,
+        "inputs": 0,
+        "x": 280,
+        "y": 480,
+        "wires": [
+            [
+                "0af59af90e7e7c2e"
+            ]
+        ]
+    },
+    {
+        "id": "60b9fa055b6520a7",
+        "type": "mqtt in",
+        "z": "d100dcfe581502c7",
+        "name": "",
+        "topic": "bank_security/zone/+/sensors/AirGradient ONE Environmental Monitor/#",
+        "qos": "2",
+        "datatype": "auto-detect",
+        "broker": "9fb88f61108d1d18",
+        "nl": false,
+        "rap": true,
+        "rh": 0,
+        "inputs": 0,
+        "x": 310,
+        "y": 1000,
+        "wires": [
+            [
+                "34fa6b233aa06cf6"
+            ]
+        ]
+    },
+    {
+        "id": "397a4d867acf3588",
+        "type": "rbe",
+        "z": "d100dcfe581502c7",
+        "name": "",
+        "func": "rbe",
+        "gap": "",
+        "start": "",
+        "inout": "out",
+        "septopics": true,
+        "property": "payload",
+        "topi": "topic",
+        "x": 590,
+        "y": 200,
+        "wires": [
+            [
+                "f5f008585fbe72d1"
+            ]
+        ]
+    },
+    {
+        "id": "f5f008585fbe72d1",
+        "type": "function",
+        "z": "d100dcfe581502c7",
+        "name": "PIR Motion sensor processing",
+        "func": "const topic = msg.topic;\nconst pathParts = topic.split(\"/\");\nconst zone = pathParts[2]; // extract zone from bank_security/zone/{zone}/...\nconst sensorType = pathParts[4]; // extract sensor type\nconst deviceId = pathParts[5]; // extract device ID\n\n// Handle different motion sensor types\nconst isMotionDetected = msg.payload.data.motionDetected ;\n\nif (isMotionDetected) {\n  // Zone-based alert levels\n\n  let alert_level = \"\";\n\n  if(zone === \"external_perimeter\" || \"high_security_floor\" || \"ground_floor\")\n  {\n    const zoneAlertLevels = {\n      external_perimeter: \"critical\",\n      high_security_floor: \"high\",\n      ground_floor: \"medium\"\n    }\n    alert_level = zoneAlertLevels[zone];\n  }\n  \n  if (zone.startsWith(\"office_floor\")){\n    alert_level = \"low\";\n  }\n\n  msg.payload.alert_level = alert_level;\n  msg.payload.timestamp = new Date().toISOString();\n  msg.payload.zone = zone;\n  msg.alert_topic = `bank_security/zone/${zone}/alerts/${deviceId}`;\n\n  const level = msg.payload.alert_level;\n  const color =\n    level === \"high\" ? \"red\" :\n      level === \"critical\" ? \"orange\" :\n        level === \"medium\" ? \"yellow\" :\n          level === \"low\" ? \"green\" : \"green\";\n\n  // Set node status\n  node.status({\n    fill: color,\n    shape: \"dot\",\n    text: `${msg.payload.alert_level} (${msg.payload.zone})`,\n  });\n\n  return [msg, null]; // Send to alert path\n\n} else {\n  return [null, msg]; // Send to normal path\n}",
+        "outputs": 1,
+        "timeout": 0,
+        "noerr": 0,
+        "initialize": "",
+        "finalize": "",
+        "libs": [],
+        "x": 810,
+        "y": 200,
+        "wires": [
+            [
+                "3882c7c501ac95d3",
+                "cee4b634a5189478"
+            ]
+        ]
+    },
+    {
+        "id": "2d59afbd1dc41af9",
+        "type": "comment",
+        "z": "d100dcfe581502c7",
+        "name": "PIR Motion Analysis",
+        "info": "Sets alert levels based on zone criticality\n\nbefore\nalertLevel: \"HIGH\" : \"NORMAL\",\n\nafter\nexternal_perimeter: \"critical\"\nhigh_security_floor_5: \"high\"\nground_floor: \"medium\"\noffice_floor_2/3: \"low\"",
+        "x": 770,
+        "y": 160,
+        "wires": []
+    },
+    {
+        "id": "3882c7c501ac95d3",
+        "type": "switch",
+        "z": "d100dcfe581502c7",
+        "name": "Condition",
+        "property": "payload.data.motionDetected",
+        "propertyType": "msg",
+        "rules": [
+            {
+                "t": "true"
+            },
+            {
+                "t": "else"
+            }
+        ],
+        "checkall": "true",
+        "repair": false,
+        "outputs": 2,
+        "x": 1020,
+        "y": 200,
+        "wires": [
+            [
+                "86af4abb78928997"
+            ],
+            [
+                "154150a2e774b20a"
+            ]
+        ]
+    },
+    {
+        "id": "86af4abb78928997",
+        "type": "function",
+        "z": "d100dcfe581502c7",
+        "name": "Alert Manager",
+        "func": "const topic = msg.topic;\nconst pathParts = topic.split(\"/\");\nconst zone = pathParts[2]; // Extract zone\nconst deviceType = pathParts[4];\nconst device_Id = pathParts[5]; // Extract device ID\n\n// Check if motion detected (or other alert condition)\nconst isMotionDetected = msg.payload.motionDetected || \n                        msg.payload.data?.motionDetected ||\n                        false;\n\nif (isMotionDetected) {\n    // Zone-based alert levels\n    const zoneAlertLevels = {\n        external_perimeter: \"critical\",\n        high_security_floor_5: \"high\",\n        ground_floor: \"medium\",\n        office_floor_2: \"low\",\n        office_floor_3: \"low\",\n    };\n\n    // Create alert message\n    msg.payload = {\n        zone: zone,\n        device: deviceType,\n        alertLevel: msg.payload.alert_level,\n        timestamp: new Date().toISOString(),\n        priority: zoneAlertLevels[zone] === \"critical\" ? 1 : \n                 zoneAlertLevels[zone] === \"high\" ? 2 : 3\n    };\n\n    // Set alert topic for MQTT Out\n    msg.topic = `bank_security/zone/${zone}/alerts/PIR_sensors/${device_Id}`;\n    \n    return msg; // Send to MQTT Out node\n} ",
+        "outputs": 1,
+        "timeout": 0,
+        "noerr": 0,
+        "initialize": "",
+        "finalize": "",
+        "libs": [],
+        "x": 2220,
+        "y": 200,
+        "wires": [
+            [
+                "c9f87370db0c2f55",
+                "53f660cb6918a2fd",
+                "9c478ea28a80a23d",
+                "1dc0c1d379870d5f",
+                "95255e77d4db2757"
+            ]
+        ]
+    },
+    {
+        "id": "154150a2e774b20a",
+        "type": "template",
+        "z": "d100dcfe581502c7",
+        "name": "",
+        "field": "payload",
+        "fieldType": "msg",
+        "format": "handlebars",
+        "syntax": "mustache",
+        "template": "{{payload.timestamp}} | {{payload.zone}} | {{payload.data.motionDetected}} | {{payload.alertLevel}} | {{payload.sensorType}}  | {{payload.location}}",
+        "output": "str",
+        "x": 1240,
+        "y": 240,
+        "wires": [
+            [
+                "83bc96f30c01e807"
+            ]
+        ]
+    },
+    {
+        "id": "59164a52eee2ea11",
+        "type": "file",
+        "z": "d100dcfe581502c7",
+        "name": "",
+        "filename": "filename",
+        "filenameType": "msg",
+        "appendNewline": true,
+        "createDir": true,
+        "overwriteFile": "false",
+        "encoding": "utf8",
+        "x": 1660,
+        "y": 240,
+        "wires": [
+            []
+        ]
+    },
+    {
+        "id": "83bc96f30c01e807",
+        "type": "function",
+        "z": "d100dcfe581502c7",
+        "name": "File name manager",
+        "func": "const zone = msg.zone || \"unknown_zone\";\nconst date = new Date().toISOString().split('T')[0]; // Gets YYYY-MM-DD format\n\n// Set the filename with zone and date\nmsg.filename = `security_logs/${zone}/security_${zone}_${date}.log`;\n\nreturn msg;",
+        "outputs": 1,
+        "timeout": 0,
+        "noerr": 0,
+        "initialize": "",
+        "finalize": "",
+        "libs": [],
+        "x": 1470,
+        "y": 240,
+        "wires": [
+            [
+                "59164a52eee2ea11"
+            ]
+        ]
+    },
+    {
+        "id": "aa89c9d53eb6efc4",
+        "type": "function",
+        "z": "d100dcfe581502c7",
+        "name": "Access Validation",
+        "func": "const topic = msg.topic;\nconst pathParts = topic.split(\"/\");\nconst zone = pathParts[2];\nconst sensorType = pathParts[4];\nconst deviceId = pathParts[5];\nconst payload = msg.payload;\nconst currentHour = new Date().getHours();\n\n// Zone-specific access hours\nconst accessHours = {\n  office_floor_2: [7, 19],\n  office_floor_3: [7, 19],\n  high_security_floor_5: [8, 17],\n  ground_floor: [6, 22],\n  external_perimeter: [0, 0], // No normal access\n};\n\n// Check access status\nconst accessGranted = payload.accessGranted || payload.data?.accessGranted;\nconst cardPresented = payload.cardPresented || payload.data?.cardPresented;\nconst wrongAttempts = payload.data.wrongAttempts;\n\nif (accessGranted === false && wrongAttempts >= 2 || (cardPresented && !accessGranted)) {\n\n  let alert_level = \"\";\n\n  if(zone === \"external_perimeter\" || \"high_security_floor\" || \"ground_floor\")\n  {\n    const zoneAlertLevels = {\n      external_perimeter: \"critical\",\n      high_security_floor: \"high\",\n      ground_floor: \"medium\"\n    }\n    alert_level = zoneAlertLevels[zone];\n  }\n  \n  if (zone.startsWith(\"office_floor\")){\n    alert_level = \"low\";\n  }\n\n  msg.payload.alert_level = alert_level;\n  msg.payload.security_event = true;\n  msg.payload.alert_topic = `bank_security/zone/${zone}/alerts/${deviceId}`;\n} else if (accessGranted && accessHours[zone]) {\n  const [startHour, endHour] = accessHours[zone];\n  if (currentHour < startHour || currentHour > endHour) {\n    msg.payload.alert_level = \"medium\";\n    msg.payload.after_hours_access = true;\n    msg.payload.alert_topic = `bank_security/zone/${zone}/alerts/${deviceId}`;\n  }\n} else msg.payload.alert_level = \"low\"\n\nmsg.payload.zone = zone;\nmsg.payload.user_name = msg.payload.data.user_name;\nmsg.payload.employee_id = msg.payload.data.employee_id;\n\n\n  const level = msg.payload.alert_level;\n  const color =\n    level === \"high\" ? \"red\" :\n      level === \"critical\" ? \"orange\" :\n        level === \"medium\" ? \"yellow\" :\n          level === \"low\" ? \"green\" : \"green\";\n\n  // Set node status\n  node.status({\n    fill: color,\n    shape: \"dot\",\n    text: `${msg.payload.alert_level} (${msg.payload.zone})`,\n  });\n\nreturn msg;",
+        "outputs": 1,
+        "timeout": 0,
+        "noerr": 0,
+        "initialize": "",
+        "finalize": "",
+        "libs": [],
+        "x": 810,
+        "y": 440,
+        "wires": [
+            [
+                "24c4462ae02503e6",
+                "a00fadd8fe4f5d02"
+            ]
+        ]
+    },
+    {
+        "id": "24c4462ae02503e6",
+        "type": "switch",
+        "z": "d100dcfe581502c7",
+        "name": "Zone + Auth Check",
+        "property": "payload.data.accessGranted",
+        "propertyType": "msg",
+        "rules": [
+            {
+                "t": "true"
+            },
+            {
+                "t": "false"
+            }
+        ],
+        "checkall": "true",
+        "repair": false,
+        "outputs": 2,
+        "x": 1010,
+        "y": 440,
+        "wires": [
+            [
+                "0d260261ae6450d7"
+            ],
+            [
+                "96d9a97b63f1c38c"
+            ]
+        ]
+    },
+    {
+        "id": "0d260261ae6450d7",
+        "type": "gate",
+        "z": "d100dcfe581502c7",
+        "name": "Security Hours",
+        "controlTopic": "gate_control",
+        "defaultState": "open",
+        "openCmd": "open",
+        "closeCmd": "close",
+        "toggleCmd": "toggle",
+        "defaultCmd": "default",
+        "statusCmd": "status",
+        "persist": true,
+        "storeName": "memory",
+        "x": 1260,
+        "y": 380,
+        "wires": [
+            [
+                "e23d64169461227e"
+            ]
+        ]
+    },
+    {
+        "id": "347cfc77cea00a32",
+        "type": "inject",
+        "z": "d100dcfe581502c7",
+        "name": "Open at 7 AM",
+        "props": [
+            {
+                "p": "payload"
+            },
+            {
+                "p": "topic",
+                "vt": "str"
+            }
+        ],
+        "repeat": "",
+        "crontab": "00 07 * * 1,2,3,4,5",
+        "once": false,
+        "onceDelay": 0.1,
+        "topic": "gate_control",
+        "payload": "open",
+        "payloadType": "str",
+        "x": 1020,
+        "y": 380,
+        "wires": [
+            [
+                "0d260261ae6450d7"
+            ]
+        ]
+    },
+    {
+        "id": "f751ca80791279cd",
+        "type": "inject",
+        "z": "d100dcfe581502c7",
+        "name": "Close at 7 PM",
+        "props": [
+            {
+                "p": "payload"
+            },
+            {
+                "p": "topic",
+                "vt": "str"
+            }
+        ],
+        "repeat": "",
+        "crontab": "00 19 * * 1,2,3,4,5",
+        "once": false,
+        "onceDelay": 0.1,
+        "topic": "gate_control",
+        "payload": "close",
+        "payloadType": "str",
+        "x": 1020,
+        "y": 320,
+        "wires": [
+            [
+                "0d260261ae6450d7"
+            ]
+        ]
+    },
+    {
+        "id": "0af59af90e7e7c2e",
+        "type": "rbe",
+        "z": "d100dcfe581502c7",
+        "name": "",
+        "func": "rbe",
+        "gap": "",
+        "start": "",
+        "inout": "out",
+        "septopics": true,
+        "property": "payload",
+        "topi": "topic",
+        "x": 650,
+        "y": 440,
+        "wires": [
+            [
+                "aa89c9d53eb6efc4"
+            ]
+        ]
+    },
+    {
+        "id": "e23d64169461227e",
+        "type": "function",
+        "z": "d100dcfe581502c7",
+        "name": "prepare user profile",
+        "func": "const userId = msg.payload.data?.cardId || msg.payload.cardId || msg.user_id;\n\n// Extract zone and device from topic or set defaults\nconst topic = msg.topic || \"\";\nconst pathParts = topic.split(\"/\");\nconst zone = pathParts[2]\nconst device = msg.payload.sensorId || \"UNKNOWN_DEVICE\";\n\n// Zone clearance combinations\nconst zoneClearanceSets = [\n  [\"ground_floor\"],\n  [\"ground_floor\", \"office_floor_2\"],\n  [\"ground_floor\", \"office_floor_3\"],\n  [\"ground_floor\", \"office_floor_2\", \"office_floor_3\"],\n  [\"ground_floor\", \"office_floor_2\", \"office_floor_3\", \"high_security_floor_5\"],\n  [\"ground_floor\", \"high_security_floor_5\"],\n  [], // No clearance (for unauthorized users)\n];\n\n// Generate unique event ID\nconst eventId = \"EVT_\" + Date.now() + \"_\" + Math.floor(Math.random() * 1000);\n\n// Current timestamp\nconst timestamp = new Date().toISOString();\n\n// Create the response payload in the specified format\nmsg.payload = {\n  event_id: eventId,\n  timestamp: timestamp,\n  user_name: msg.payload.user_name,\n  zone: zone,\n  alert_level: msg.payload.alert_level,\n  device: device,\n  employee_id: msg.payload.employee_id,\n};\n\n// Set node status\nnode.status({\n  fill: msg.payload.user_name ? \"green\" : \"red\",\n  shape: \"dot\",\n  text: `${msg.payload.user_name} (${msg.payload.zone})`,\n});\n\nreturn msg;",
+        "outputs": 1,
+        "timeout": 0,
+        "noerr": 0,
+        "initialize": "",
+        "finalize": "",
+        "libs": [],
+        "x": 1470,
+        "y": 380,
+        "wires": [
+            [
+                "4eee76a7d05b0821"
+            ]
+        ]
+    },
+    {
+        "id": "4eee76a7d05b0821",
+        "type": "mqtt out",
+        "z": "d100dcfe581502c7",
+        "name": "",
+        "topic": "bank-security/sensors/access_log",
+        "qos": "",
+        "retain": "",
+        "respTopic": "",
+        "contentType": "",
+        "userProps": "",
+        "correl": "",
+        "expiry": "",
+        "broker": "f9ad20b16fe46381",
+        "x": 1740,
+        "y": 380,
+        "wires": [],
+        "icon": "node-red-contrib-aws/aws.png"
+    },
+    {
+        "id": "c177ccc3be007c0f",
+        "type": "rbe",
+        "z": "d100dcfe581502c7",
+        "name": "",
+        "func": "rbe",
+        "gap": "",
+        "start": "",
+        "inout": "out",
+        "septopics": true,
+        "property": "payload",
+        "topi": "topic",
+        "x": 650,
+        "y": 920,
+        "wires": [
+            [
+                "61d5861dc306f3fc"
+            ]
+        ]
+    },
+    {
+        "id": "61d5861dc306f3fc",
+        "type": "function",
+        "z": "d100dcfe581502c7",
+        "name": "Environmental threshold check",
+        "func": "const topic = msg.topic;\nconst pathParts = topic.split(\"/\");\nconst zone = pathParts[2];\nconst deviceId = pathParts[5];\nconst payload = msg.payload;\n\n// Zone-specific thresholds (higher security = stricter thresholds)\nconst zoneThresholds = {\n    high_security_floor: {\n        smoke: { warning: 20, critical: 40, emergency: 60 },\n        air_quality: { good: 30, moderate: 80, unhealthy: 120, hazardous: 200 },\n        temperature: { low: 18, normal: 23, high: 27, critical: 30 },\n    },\n    external_perimeter: {\n        smoke: { warning: 25, critical: 45, emergency: 70 },\n        temperature: { low: 10, normal: 25, high: 35, critical: 40 },\n    },\n    default: {\n        smoke: { warning: 30, critical: 50, emergency: 80 },\n        air_quality: { good: 50, moderate: 100, unhealthy: 150, hazardous: 300 },\n        temperature: { low: 15, normal: 25, high: 30, critical: 35 },\n        humidity: { low: 30, normal: 60, high: 80 },\n    },\n};\n\nconst thresholds = zoneThresholds[zone] || zoneThresholds.default;\n\nif (payload.data.smokeDetected) {\n    const smokeLevel = payload.data.smokeLevel;\n\n    if (smokeLevel >= thresholds.smoke.emergency) {\n        msg.payload.data.alertLevel = \"emergency\";\n        msg.evacuation_required = true;\n        msg.priority = zone === \"high_security_floor\" ? \"critical\" : \"high\";\n    } else if (smokeLevel >= thresholds.smoke.critical) {\n        msg.payload.data.alertLevel = \"critical\";\n        msg.immediate_action = true;\n    } else if (smokeLevel >= thresholds.smoke.warning) {\n        msg.payload.data.alertLevel = \"warning\";\n    } else {\n        msg.payload.data.alertLevel = \"normal\";\n    }\n\n    msg.payload.zone = zone\n    msg.payload.alert_topic = `bank_security/zone/${zone}/alerts/${deviceId}`;\n} else msg.payload.data.alertLevel = \"low\";\n\n  const level = msg.payload.data.alertLevel;\n  const color =\n    level === \"emergency\" ? \"red\" :\n      level === \"critical\" ? \"orange\" :\n        level === \"normal\" ? \"yellow\" :\n          level === \"low\" ? \"green\" : \"green\";\n\n  // Set node status\n  node.status({\n    fill: color,\n    shape: \"dot\",\n    text: `${level} (${msg.payload.zone})`,\n  });\n\nreturn msg;",
+        "outputs": 1,
+        "timeout": 0,
+        "noerr": 0,
+        "initialize": "",
+        "finalize": "",
+        "libs": [],
+        "x": 870,
+        "y": 920,
+        "wires": [
+            [
+                "2bfb708c799ba081"
+            ]
+        ]
+    },
+    {
+        "id": "7d016d91cd30152e",
+        "type": "range",
+        "z": "d100dcfe581502c7",
+        "minin": "0",
+        "maxin": "150",
+        "minout": "0",
+        "maxout": "100",
+        "action": "scale",
+        "round": true,
+        "property": "payload.data.smokeDensity",
+        "name": "SmokeDensity scaler",
+        "x": 1480,
+        "y": 900,
+        "wires": [
+            [
+                "b250be7c177f2e2d"
+            ]
+        ]
+    },
+    {
+        "id": "b250be7c177f2e2d",
+        "type": "range",
+        "z": "d100dcfe581502c7",
+        "minin": "15",
+        "maxin": "55",
+        "minout": "0",
+        "maxout": "100",
+        "action": "scale",
+        "round": true,
+        "property": "payload.data.temperature",
+        "name": "Temperature scaler",
+        "x": 1470,
+        "y": 960,
+        "wires": [
+            [
+                "a8879d562ce1d7c8"
+            ]
+        ]
+    },
+    {
+        "id": "a8879d562ce1d7c8",
+        "type": "range",
+        "z": "d100dcfe581502c7",
+        "minin": "0",
+        "maxin": "100",
+        "minout": "0",
+        "maxout": "100",
+        "action": "scale",
+        "round": true,
+        "property": "payload.data.humidity",
+        "name": "Humidity scaler",
+        "x": 1460,
+        "y": 1020,
+        "wires": [
+            [
+                "29953b57e7e9da9d",
+                "f1a036b6e39d483c",
+                "f02259abdd832ae2"
+            ]
+        ]
+    },
+    {
+        "id": "2bfb708c799ba081",
+        "type": "function",
+        "z": "d100dcfe581502c7",
+        "name": "payload reconstructor",
+        "func": "// Initialize memory object if it doesn't exist\nif (typeof context.sensorMemory === 'undefined') {\n    context.sensorMemory = {\n        temperature: null,\n        humidity: null,\n        smokeDensity: null,\n        airQuality: null,\n        alertLevel: null,\n        lastUpdated: null\n    };\n}\n\n// If no payload data, return null to wait\nif (!msg.payload || !msg.payload.data) {\n    return null;\n}\n\nconst data = msg.payload.data;\n\n// Check if this is from AirGradient ONE monitor (has humidity, temperature, airQuality)\nif (data.humidity !== null && data.humidity !== undefined && data.humidity !== 0) {\n    context.sensorMemory.humidity = data.humidity;\n}\n\nif (data.temperature !== null && data.temperature !== undefined && data.temperature !== 0) {\n    context.sensorMemory.temperature = data.temperature;\n}\n\nif (data.pm25 !== null && data.pm25 !== undefined && data.pm25 !== 0) {\n    context.sensorMemory.airQuality = data.pm25; // Using PM2.5 as air quality metric\n}\n\n// Check if this is from i3 smoke detector (has smokeDensity)\nif (data.smokeDensity !== null && data.smokeDensity !== undefined && data.smokeDensity !== 0) {\n    context.sensorMemory.smokeDensity = data.smokeDensity;\n}\n\n// Update alert level\nif (data.alertLevel !== null && data.alertLevel !== undefined) {\n    context.sensorMemory.alertLevel = data.alertLevel;\n}\n\n// Update timestamp\ncontext.sensorMemory.lastUpdated = new Date().toISOString();\n\n// Check if we have data from BOTH sensors (AirGradient + i3 smoke detector)\nif (context.sensorMemory.temperature !== null && \n    context.sensorMemory.humidity !== null && \n    context.sensorMemory.smokeDensity !== null &&\n    context.sensorMemory.airQuality !== null) {\n    \n    // We have complete data from both sensors, create output message\n    msg.payload = {\n        sensorId: msg.payload.sensorId,\n        sensorType: msg.payload.sensorType,\n        location: msg.payload.location,\n        timestamp: context.sensorMemory.lastUpdated,\n        zone: msg.payload.zone,\n        data: {\n            // From AirGradient ONE\n            temperature: context.sensorMemory.temperature,\n            humidity: context.sensorMemory.humidity,\n            airQuality: context.sensorMemory.airQuality,\n            // From i3 Smoke Detector\n            smokeDensity: context.sensorMemory.smokeDensity,\n            // Combined status\n            alertLevel: context.sensorMemory.alertLevel\n        }\n    };\n    \n    // Optional: Reset memory after successful combination\n    // Remove this block if you want to keep the last known values\n    context.sensorMemory = {\n        temperature: null,\n        humidity: null,\n        smokeDensity: null,\n        airQuality: null,\n        alertLevel: null,\n        lastUpdated: null\n    };\n    \n    return msg;\n}\n\n// Still waiting for data from the other sensor\nreturn null;",
+        "outputs": 1,
+        "timeout": 0,
+        "noerr": 0,
+        "initialize": "",
+        "finalize": "",
+        "libs": [],
+        "x": 1180,
+        "y": 960,
+        "wires": [
+            [
+                "688d4f1749654d75",
+                "f4d3a9059d5baa76",
+                "88900f1dbc78fa51",
+                "da3196fc4f8d78c6"
+            ]
+        ]
+    },
+    {
+        "id": "34fa6b233aa06cf6",
+        "type": "rbe",
+        "z": "d100dcfe581502c7",
+        "name": "",
+        "func": "rbe",
+        "gap": "",
+        "start": "",
+        "inout": "out",
+        "septopics": true,
+        "property": "payload",
+        "topi": "topic",
+        "x": 650,
+        "y": 1000,
+        "wires": [
+            [
+                "4b0735a712b96920"
+            ]
+        ]
+    },
+    {
+        "id": "4b0735a712b96920",
+        "type": "function",
+        "z": "d100dcfe581502c7",
+        "name": "Environmental threshold check",
+        "func": "const topic = msg.topic;\nconst pathParts = topic.split(\"/\");\nconst zone = pathParts[2];\nconst deviceId = pathParts[5];\nconst payload = msg.payload;\n\nlet zoneThreshold_var = \"\";\n\n// Zone-specific thresholds (higher security = stricter thresholds)\nif(zone === \"external_perimeter\" || \"high_security_floor\" || \"ground_floor\")\n  {\n    const zoneThresholds = {\n        high_security_floor: {\n            temperature: { low: 18, normal: 23, high: 27, critical: 30 },\n        },\n        external_perimeter: {\n            temperature: { low: 10, normal: 25, high: 35, critical: 40 },\n        },\n        ground_floor: {\n            temperature: { low: 16, normal: 22, high: 26, critical: 32 },\n        }\n    };\n    zoneThreshold_var = zoneThresholds[zone] || zoneThresholds.default;\n  }\n\nif (zone.startsWith(\"office_floor\"))\n  {\n    const zoneThresholds = {\n    temperature: { low: 20, normal: 23, high: 26, critical: 29 },\n    }\n    zoneThreshold_var = zoneThresholds;\n  }\n\nconst thresholds = zoneThreshold_var; \n\nif (payload.data.temperature) {\n    const temperature = payload.data.temperature;\n\n    if (temperature >= thresholds.temperature.critical) {\n        msg.payload.data.alertLevel = \"emergency\";\n        msg.evacuation_required = true;\n        msg.priority = zone === \"high_security_floor_5\" ? \"critical\" : \"high\";\n    } else if (temperature >= thresholds.temperature.high) {\n        msg.payload.data.alertLevel = \"critical\";\n        msg.immediate_action = true;\n    } else if (temperature >= thresholds.temperature.normal) {\n        msg.payload.data.alertLevel = \"warning\";\n    } else {\n        msg.payload.data.alertLevel = \"normal\";\n    }\n\n    msg.payload.zone = zone\n    msg.payload.alert_topic = `bank_security/zone/${zone}/alerts/${deviceId}`;\n} else msg.payload.data.alertLevel = \"low\";\n\n// Set node status\nconst level = msg.payload.data.alertLevel;\nconst color =\n    level === \"emergency\" ? \"red\" :\n        level === \"critical\" ? \"orange\" :\n            level === \"normal\" ? \"yellow\" :\n                level === \"low\" ? \"green\" : \"green\";\n\n// Set node status\nnode.status({\n    fill: color,\n    shape: \"dot\",\n    text: `${msg.payload.data.alertLevel} (${msg.payload.zone})`,\n});\n\nreturn msg;",
+        "outputs": 1,
+        "timeout": 0,
+        "noerr": 0,
+        "initialize": "",
+        "finalize": "",
+        "libs": [],
+        "x": 870,
+        "y": 1000,
+        "wires": [
+            [
+                "2bfb708c799ba081"
+            ]
+        ]
+    },
+    {
+        "id": "88900f1dbc78fa51",
+        "type": "function",
+        "z": "d100dcfe581502c7",
+        "name": "AWS db constructor",
+        "func": "const data = msg.payload.data\n\n// Generate unique event ID\nconst eventId = \"EVT_\" + Date.now() + \"_\" + Math.floor(Math.random() * 1000);\n\n// Current timestamp\nconst timestamp = new Date().toISOString();\n\n\nmsg.payload = {\n  event_id: eventId,\n  timestamp: timestamp,\n  humidity: data.humidity,\n  temperature: data.temperature,\n  smokeDensity: data.smokeDensity,\n  airQuality: data.airQuality,\n  alert_level: data.alertLevel,\n  zone: msg.payload.zone\n};\n\n// Set node status\nnode.status({\n  fill: data.alertLevel === \"High\" ? \"green\" : \"red\",\n  shape: \"dot\",\n  text: `${data.alertLevel} (${msg.payload.zone})`,\n});\n\nreturn msg;",
+        "outputs": 1,
+        "timeout": 0,
+        "noerr": 0,
+        "initialize": "",
+        "finalize": "",
+        "libs": [],
+        "x": 1480,
+        "y": 1080,
+        "wires": [
+            [
+                "b48f5dc518fd1584"
+            ]
+        ]
+    },
+    {
+        "id": "b48f5dc518fd1584",
+        "type": "mqtt out",
+        "z": "d100dcfe581502c7",
+        "name": "",
+        "topic": "bank-security/sensors/environmental_data_log",
+        "qos": "",
+        "retain": "",
+        "respTopic": "",
+        "contentType": "",
+        "userProps": "",
+        "correl": "",
+        "expiry": "",
+        "broker": "f9ad20b16fe46381",
+        "x": 1860,
+        "y": 1080,
+        "wires": [],
+        "icon": "node-red-contrib-aws/aws.png"
+    },
+    {
+        "id": "4eb05a4e39f6a3e5",
+        "type": "debug",
+        "z": "d100dcfe581502c7",
+        "name": "debug 3",
+        "active": true,
+        "tosidebar": true,
+        "console": false,
+        "tostatus": false,
+        "complete": "false",
+        "statusVal": "",
+        "statusType": "auto",
+        "x": 2400,
+        "y": 1420,
+        "wires": []
+    },
+    {
+        "id": "a972c2c07afa432b",
+        "type": "function",
+        "z": "d100dcfe581502c7",
+        "name": "AI Analysis",
+        "func": "const topic = msg.topic;\nconst pathParts = topic.split(\"/\");\nconst zone = pathParts[2];\nconst sensorType = pathParts[4];\nconst deviceId = pathParts[5];\nconst payload = msg.payload;\n\nlet zoneConfig_var = \"\";\n\n// Zone-based camera analysis configuration\nif(zone === \"external_perimeter\" || \"high_security_floor\" || \"ground_floor\")\n{\n  const zoneConfig = {\n    external_perimeter: {\n      threat_threshold: 0.3,\n      always_alert: true,\n      record_all: true,\n      high_sensitivity: true,\n    },\n    high_security_floor: {\n      threat_threshold: 0.5,\n      business_hours_only: false,\n      face_detection_required: true,\n      unauthorized_access_critical: true,\n    },\n    ground_floor: {\n      threat_threshold: 0.7,\n      business_hours_only: true,\n      public_area: true,\n    },  \n  };\n  zoneConfig_var = zoneConfig[zone];\n}\n\nif (zone.startsWith(\"office_floor\")){\n  const zoneConfig = \n    { \n      threat_threshold: 0.8,\n      business_hours_only: true,\n      staff_area: true,\n    }  \n  zoneConfig_var = zoneConfig;\n}\n\nconst config = zoneConfig_var;\nconst currentHour = new Date().getHours();\nconst isBusinessHours = currentHour >= 8 && currentHour <= 18;\n\n// AI Analysis variables\nlet threatLevel = 0.0;\nlet recordingRequired = false;\n\n// Extract AI detection data\nconst detections = payload.detections || [];\nconst motionDetected = payload.motionDetected || payload.data?.motionDetected;\nconst personDetected = payload.personDetected || payload.data?.personDetected;\nconst faceDetected = payload.faceDetected || payload.data?.faceDetected;\nconst suspiciousBehavior =\n  payload.suspiciousBehavior || payload.data?.suspiciousBehavior;\nconst unauthorized = payload.unauthorized || payload.data?.unauthorized;\n\n// Calculate threat level based on detections\nif (personDetected) {\n  threatLevel += 0.3;\n\n  if (faceDetected && config.face_detection_required) {\n    const knownPerson = payload.knownPerson || payload.data?.knownPerson;\n    if (!knownPerson) {\n      threatLevel += 0.4;\n    }\n  }\n}\n\nif (motionDetected) {\n  threatLevel += 0.2;\n}\n\nif (suspiciousBehavior) {\n  threatLevel += 0.6;\n  msg.investigation_required = true;\n}\n\nif (unauthorized) {\n  threatLevel += 0.8;\n  msg.security_breach = true;\n}\n\n// Zone-specific adjustments\nif (zone === \"external_perimeter\") {\n  threatLevel += 0.2; // Higher base threat for perimeter\n}\n\n// Business hours consideration\nif (config.business_hours_only && !isBusinessHours) {\n  threatLevel += 0.3; // After hours activity is more suspicious\n}\n\n// Determine if alert is required\nif (threatLevel >= config.threat_threshold) {\n\n  if (threatLevel >= 0.9) {\n    msg.payload.alert_level = \"critical\";\n    recordingRequired = true;\n  } else if (threatLevel >= 0.7) {\n    msg.payload.alert_level = \"high\";\n    recordingRequired = true;\n  } else if (threatLevel >= 0.5) {\n    msg.payload.alert_level = \"medium\";\n  } \n} else {\n  msg.payload.alert_level = \"low\";\n}\n\n// Always record for certain zones\nif (config.record_all) {\n  recordingRequired = true;\n}\n\n// Set message properties\nmsg.payload.zone = zone;\nmsg.payload.threat_level = threatLevel;\nmsg.payload.recording_required = recordingRequired;\nmsg.payload.business_hours = isBusinessHours;\nmsg.payload.alert_topic = `bank_security/zone/${zone}/alerts/${deviceId}`;\n\n// Recording configuration\nmsg.recording_config = {\n  duration: threatLevel > 0.7 ? 60 : 30, // seconds\n  quality: zone === \"high_security_floor\" ? \"high\" : \"standard\",\n  pre_recording: 5, // seconds before trigger\n  post_recording: 10, // seconds after trigger ends\n};\n\n// Set node status\nnode.status({\n  fill: msg.payload.alert_level == (\"low\" || \"medium\") ? \"green\" : \"red\",\n  shape: \"dot\",\n  text: `${msg.payload.alert_level} (${msg.payload.zone})`,\n});\n\nreturn msg;",
+        "outputs": 1,
+        "timeout": 0,
+        "noerr": 0,
+        "initialize": "",
+        "finalize": "",
+        "libs": [],
+        "x": 1150,
+        "y": 1460,
+        "wires": [
+            [
+                "5313671df46d3638",
+                "2f5e8145170b8bba",
+                "7ff9237e25554c99",
+                "81105742b9ccad06"
+            ]
+        ]
+    },
+    {
+        "id": "7ff9237e25554c99",
+        "type": "switch",
+        "z": "d100dcfe581502c7",
+        "name": "Threat Level Switch",
+        "property": "payload.data.alertLevel",
+        "propertyType": "msg",
+        "rules": [
+            {
+                "t": "eq",
+                "v": "high",
+                "vt": "str"
+            },
+            {
+                "t": "eq",
+                "v": "critical",
+                "vt": "str"
+            },
+            {
+                "t": "eq",
+                "v": "medium",
+                "vt": "str"
+            },
+            {
+                "t": "eq",
+                "v": "low",
+                "vt": "str"
+            }
+        ],
+        "checkall": "true",
+        "repair": false,
+        "outputs": 4,
+        "x": 1470,
+        "y": 1460,
+        "wires": [
+            [
+                "88483a19539f10d0"
+            ],
+            [
+                "88483a19539f10d0"
+            ],
+            [
+                "41e354c8d5b5ed64"
+            ],
+            [
+                "41e354c8d5b5ed64"
+            ]
+        ]
+    },
+    {
+        "id": "83be6290e81a78da",
+        "type": "http request",
+        "z": "d100dcfe581502c7",
+        "name": "Record Trigger",
+        "method": "POST",
+        "ret": "obj",
+        "paytoqs": "ignore",
+        "url": "http://localhost:8080/api/camera/start-recording",
+        "tls": "",
+        "persist": false,
+        "proxy": "",
+        "insecureHTTPParser": false,
+        "authType": "",
+        "senderr": false,
+        "headers": [],
+        "x": 2020,
+        "y": 1420,
+        "wires": [
+            [
+                "19f2dedf755a34eb"
+            ]
+        ]
+    },
+    {
+        "id": "88483a19539f10d0",
+        "type": "function",
+        "z": "d100dcfe581502c7",
+        "name": "Payload Preparation",
+        "func": "msg.payload = {\n  camera_id: msg.payload.sensorId,\n  zone: msg.payload.zone,\n  duration: msg.recording_config.duration,\n  quality: msg.recording_config.quality,\n  trigger_reason: msg.payload.data.alertLevel,\n  threat_level: msg.payload.threat_level,\n  timestamp: msg.timestamp,\n  pre_recording: msg.recording_config.pre_recording,\n  post_recording: msg.recording_config.post_recording,\n};\n\nmsg.headers = {\n  \"Content-Type\": \"application/json\",\n  Authorization: \"Bearer \" + global.get(\"camera_api_token\"),\n};\n\nreturn msg;",
+        "outputs": 1,
+        "timeout": 0,
+        "noerr": 0,
+        "initialize": "",
+        "finalize": "",
+        "libs": [],
+        "x": 1780,
+        "y": 1420,
+        "wires": [
+            [
+                "83be6290e81a78da"
+            ]
+        ]
+    },
+    {
+        "id": "19f2dedf755a34eb",
+        "type": "change",
+        "z": "d100dcfe581502c7",
+        "name": "Add Metadata",
+        "rules": [
+            {
+                "t": "set",
+                "p": "msg.incident_id",
+                "pt": "msg",
+                "to": "$millis()",
+                "tot": "jsonata"
+            }
+        ],
+        "action": "",
+        "property": "",
+        "from": "",
+        "to": "",
+        "reg": false,
+        "x": 2220,
+        "y": 1420,
+        "wires": [
+            [
+                "4eb05a4e39f6a3e5"
+            ]
+        ]
+    },
+    {
+        "id": "41e354c8d5b5ed64",
+        "type": "template",
+        "z": "d100dcfe581502c7",
+        "name": "",
+        "field": "payload",
+        "fieldType": "msg",
+        "format": "handlebars",
+        "syntax": "mustache",
+        "template": "{{payload.timestamp}} | {{payload.zone}} | {{payload.data.alertLevel}} | {{payload.sensorType}} | {{payload.suspiciousBehavior}} | {{payload.data.motionDetected}} | {{payload.faceDetected}}",
+        "output": "str",
+        "x": 1740,
+        "y": 1480,
+        "wires": [
+            [
+                "e0585b4c4ecfdb11"
+            ]
+        ]
+    },
+    {
+        "id": "e0585b4c4ecfdb11",
+        "type": "function",
+        "z": "d100dcfe581502c7",
+        "name": "File name manager",
+        "func": "const zone = msg.zone || \"unknown_zone\";\nconst date = new Date().toISOString().split('T')[0]; // Gets YYYY-MM-DD format\n\n// Set the filename with zone and date\nmsg.filename = `security_logs/${zone}/security_${zone}_${date}.log`;\n\nreturn msg;",
+        "outputs": 1,
+        "timeout": 0,
+        "noerr": 0,
+        "initialize": "",
+        "finalize": "",
+        "libs": [],
+        "x": 1770,
+        "y": 1540,
+        "wires": [
+            [
+                "4874c03383b5ab19"
+            ]
+        ]
+    },
+    {
+        "id": "4874c03383b5ab19",
+        "type": "file",
+        "z": "d100dcfe581502c7",
+        "name": "",
+        "filename": "filename",
+        "filenameType": "msg",
+        "appendNewline": true,
+        "createDir": true,
+        "overwriteFile": "false",
+        "encoding": "utf8",
+        "x": 2000,
+        "y": 1480,
+        "wires": [
+            [
+                "184ea1645a8a766e"
+            ]
+        ]
+    },
+    {
+        "id": "184ea1645a8a766e",
+        "type": "file in",
+        "z": "d100dcfe581502c7",
+        "name": "",
+        "filename": "filename",
+        "filenameType": "msg",
+        "format": "utf8",
+        "chunk": false,
+        "sendError": false,
+        "encoding": "none",
+        "allProps": false,
+        "x": 2000,
+        "y": 1540,
+        "wires": [
+            []
+        ]
+    },
+    {
+        "id": "81105742b9ccad06",
+        "type": "function",
+        "z": "d100dcfe581502c7",
+        "name": "AWS db constructor",
+        "func": "const data = msg.payload\n\n// Generate unique event ID\nconst eventId = \"EVT_\" + Date.now() + \"_\" + Math.floor(Math.random() * 1000);\n\n// Current timestamp\nconst timestamp = new Date().toISOString();\n\n\nmsg.payload = {\n  event_id: eventId,\n  timestamp: timestamp,\n  faceDetected: data.faceDetected,\n  suspiciousBehavior: data.suspiciousBehavior,\n  threat_level: msg.payload.threat_level,\n  alert_level: msg.payload.alert_level,\n  recording_required: msg.payload.recording_required,\n  zone: msg.payload.zone\n};\n\n// Set node status\nnode.status({\n  fill: msg.payload.alert_level === \"High\" ? \"red\" : \"green\",\n  shape: \"dot\",\n  text: `${msg.payload.alert_level} (${msg.payload.zone})`,\n});\n\nreturn msg;",
+        "outputs": 1,
+        "timeout": 0,
+        "noerr": 0,
+        "initialize": "",
+        "finalize": "",
+        "libs": [],
+        "x": 1480,
+        "y": 1600,
+        "wires": [
+            [
+                "26dac67a1bf3e31e"
+            ]
+        ]
+    },
+    {
+        "id": "e123d70f91a5f8ff",
+        "type": "mqtt out",
+        "z": "d100dcfe581502c7",
+        "name": "",
+        "topic": "bank-security/sensors/camera",
+        "qos": "",
+        "retain": "",
+        "respTopic": "",
+        "contentType": "",
+        "userProps": "",
+        "correl": "",
+        "expiry": "",
+        "broker": "f9ad20b16fe46381",
+        "x": 2070,
+        "y": 1600,
+        "wires": [],
+        "icon": "node-red-contrib-aws/aws.png"
+    },
+    {
+        "id": "26dac67a1bf3e31e",
+        "type": "rbe",
+        "z": "d100dcfe581502c7",
+        "name": "",
+        "func": "rbe",
+        "gap": "",
+        "start": "",
+        "inout": "out",
+        "septopics": true,
+        "property": "payload.suspiciousBehavior",
+        "topi": "topic",
+        "x": 1730,
+        "y": 1600,
+        "wires": [
+            [
+                "e123d70f91a5f8ff"
+            ]
+        ]
+    },
+    {
+        "id": "688d4f1749654d75",
+        "type": "range",
+        "z": "d100dcfe581502c7",
+        "minin": "5",
+        "maxin": "155",
+        "minout": "0",
+        "maxout": "100",
+        "action": "scale",
+        "round": true,
+        "property": "payload.data.airQuality",
+        "name": "Air Quality scaler",
+        "x": 1470,
+        "y": 840,
+        "wires": [
+            [
+                "7d016d91cd30152e"
+            ]
+        ]
+    },
+    {
+        "id": "f6ffbc1dd174037a",
+        "type": "rbe",
+        "z": "d100dcfe581502c7",
+        "name": "",
+        "func": "rbe",
+        "gap": "",
+        "start": "",
+        "inout": "out",
+        "septopics": true,
+        "property": "payload",
+        "topi": "topic",
+        "x": 650,
+        "y": 1720,
+        "wires": [
+            [
+                "82ef71844c8e46d6"
+            ]
+        ]
+    },
+    {
+        "id": "82ef71844c8e46d6",
+        "type": "function",
+        "z": "d100dcfe581502c7",
+        "name": "Laser scanner data analyser",
+        "func": "// Multi-sensor perimeter correlation with wildcard handling\nconst topic = msg.topic;\nconst pathParts = topic.split(\"/\");\nconst zone = pathParts[2]; // should be external_perimeter\nconst sensorType = pathParts[4]; // laser_scanner, pir_beam, or camera\nconst deviceId = pathParts[5];\nconst payload = msg.payload;\n\n// Store sensor reading for multi-sensor correlation\nglobal.set(`perimeter_${deviceId}_reading`, {\n  type: sensorType,\n  device: deviceId,\n  timestamp: new Date().toISOString(),\n  data: payload,\n});\n\n// Check for different types of perimeter breaches\nlet detected = false;\nlet confidence = 0.3; // base confidence\n\nif (\n  sensorType === \"Optex SL-200QN Laser Scanner\" &&\n  (payload.obstacleDetected || payload.data?.obstacleDetected)\n) {\n  detected = true;\n  confidence = 0.8;\n  msg.detection_method = \"laser_obstacle\";\n} else if (\n  sensorType === \"Optex VX-402R Laser Barrier\" &&\n  (payload.motionDetected || payload.data?.motionDetected)\n) {\n  detected = true;\n  confidence = 0.6;\n  msg.detection_method = \"pir_motion\";\n} else if (\n  sensorType === \"camera\" &&\n  (payload.intrusionDetected || payload.data?.intrusionDetected)\n) {\n  detected = true;\n  confidence = 0.7;\n  msg.detection_method = \"camera_intrusion\";\n}\n\nif (detected) {\n  // Multi-sensor confirmation boost\n  const recentReadings = global.get(\"perimeter_*_reading\") || {};\n  const recentDetections = Object.values(recentReadings).filter(\n    (reading) =>\n      new Date().getTime() - new Date(reading.timestamp).getTime() < 10000 // 10 seconds\n  ).length;\n\n  if (recentDetections > 1) {\n    confidence += 0.3; // Multi-sensor confirmation\n    msg.multi_sensor_confirmed = true;\n  }\n\n  msg.threat_confidence = Math.min(confidence, 1.0);\n\n  // Alert level based on confidence\n  if (confidence >= 0.9) {\n    msg.payload.data.alert_level = \"emergency\";\n    msg.immediate_lockdown = true;\n  } else if (confidence >= 0.7) {\n    msg.payload.data.alert_level = \"critical\";\n    msg.response_required = true;\n  } else if (confidence >= 0.5) {\n    msg.payload.data.alert_level = \"high\";\n    msg.investigation_required = true;\n  } \n\n  msg.payload.zone = zone;\n  msg.payload.alert_topic = `bank_security/zone/external_perimeter/alerts/${deviceId}`;\n\n  // Response timeline based on confidence\n    msg.payload.response_time = confidence > 0.9 ? 15 : confidence > 0.7 ? 30 : 60; // seconds\n\n} else {\n    msg.payload.data.alert_level = \"normal\";\n    msg.payload.data.distance = null;\n}\n\n  const level = msg.payload.data.alert_level;\n  const color =\n    level === \"high\" ? \"red\" :\n      level === \"critical\" ? \"orange\" :\n        level === \"medium\" ? \"yellow\" :\n          level === \"low\" ? \"green\" : \"green\";\n\n  // Set node status\n  node.status({\n    fill: color,\n    shape: \"dot\",\n    text: `${level} (${msg.payload.zone})`,\n  });\n\nreturn msg;",
+        "outputs": 1,
+        "timeout": 0,
+        "noerr": 0,
+        "initialize": "",
+        "finalize": "",
+        "libs": [],
+        "x": 880,
+        "y": 1720,
+        "wires": [
+            [
+                "afed241ee508c8f4",
+                "b2f27c8f3a2d7ff4",
+                "2a495ace92803c40"
+            ]
+        ]
+    },
+    {
+        "id": "afed241ee508c8f4",
+        "type": "function",
+        "z": "d100dcfe581502c7",
+        "name": "AWS db constructor",
+        "func": "const data = msg.payload.data\n\n// Generate unique event ID\nconst eventId = \"EVT_\" + Date.now() + \"_\" + Math.floor(Math.random() * 1000);\n\n// Current timestamp\nconst timestamp = new Date().toISOString();\n\n\nmsg.payload = {\n  event_id: eventId,\n  timestamp: timestamp,\n  obstacleDetected: data.obstacleDetected,\n  distance: data.distance,\n  beamStatus: msg.payload.beamStatus,\n  alert_level: msg.payload.data.alert_level,\n  recording_required: msg.payload.recording_required,\n};\n\n// Set node status\nnode.status({\n  fill: msg.payload.obstacleDetected ? \"red\" : \"green\",\n  shape: \"dot\",\n  text: `Obstacle detected: ${msg.payload.obstacleDetected}`,\n});\n\nreturn msg;",
+        "outputs": 1,
+        "timeout": 0,
+        "noerr": 0,
+        "initialize": "",
+        "finalize": "",
+        "libs": [],
+        "x": 1160,
+        "y": 1880,
+        "wires": [
+            [
+                "3715c0d1368b8e18"
+            ]
+        ]
+    },
+    {
+        "id": "96443cdd72f355e8",
+        "type": "mqtt out",
+        "z": "d100dcfe581502c7",
+        "name": "",
+        "topic": "bank-security/sensors/lazer_scanner",
+        "qos": "",
+        "retain": "",
+        "respTopic": "",
+        "contentType": "",
+        "userProps": "",
+        "correl": "",
+        "expiry": "",
+        "broker": "f9ad20b16fe46381",
+        "x": 1830,
+        "y": 1880,
+        "wires": [],
+        "icon": "node-red-contrib-aws/aws.png"
+    },
+    {
+        "id": "b2f27c8f3a2d7ff4",
+        "type": "switch",
+        "z": "d100dcfe581502c7",
+        "name": "",
+        "property": "payload.data.obstacleDetected",
+        "propertyType": "msg",
+        "rules": [
+            {
+                "t": "eq",
+                "v": "true",
+                "vt": "str"
+            },
+            {
+                "t": "else"
+            }
+        ],
+        "checkall": "true",
+        "repair": false,
+        "outputs": 2,
+        "x": 1110,
+        "y": 1720,
+        "wires": [
+            [
+                "658ac1c785d527be"
+            ],
+            [
+                "e8427f0f8f0283c2"
+            ]
+        ]
+    },
+    {
+        "id": "e8427f0f8f0283c2",
+        "type": "template",
+        "z": "d100dcfe581502c7",
+        "name": "",
+        "field": "payload",
+        "fieldType": "msg",
+        "format": "handlebars",
+        "syntax": "mustache",
+        "template": "{{payload.timestamp}} | {{payload.zone}} | {{payload.data.obstacleDetected}} | {{payload.beamStatus}} | {{payload.signalStrength}} | {{payload.data.motionDetected}} | {{payload.faceDetected}}",
+        "output": "str",
+        "x": 1440,
+        "y": 1760,
+        "wires": [
+            [
+                "c2b073c3c7dad468"
+            ]
+        ]
+    },
+    {
+        "id": "c2b073c3c7dad468",
+        "type": "function",
+        "z": "d100dcfe581502c7",
+        "name": "File name manager",
+        "func": "const zone = msg.zone || \"unknown_zone\";\nconst date = new Date().toISOString().split('T')[0]; // Gets YYYY-MM-DD format\n\n// Set the filename with zone and date\nmsg.filename = `security_logs/${zone}/security_${zone}_${date}.log`;\n\nreturn msg;",
+        "outputs": 1,
+        "timeout": 0,
+        "noerr": 0,
+        "initialize": "",
+        "finalize": "",
+        "libs": [],
+        "x": 1470,
+        "y": 1820,
+        "wires": [
+            [
+                "8504b60f4e4ab10b"
+            ]
+        ]
+    },
+    {
+        "id": "8504b60f4e4ab10b",
+        "type": "file",
+        "z": "d100dcfe581502c7",
+        "name": "",
+        "filename": "filename",
+        "filenameType": "msg",
+        "appendNewline": true,
+        "createDir": true,
+        "overwriteFile": "false",
+        "encoding": "utf8",
+        "x": 1740,
+        "y": 1760,
+        "wires": [
+            [
+                "78626a449b1b4f98"
+            ]
+        ]
+    },
+    {
+        "id": "78626a449b1b4f98",
+        "type": "file in",
+        "z": "d100dcfe581502c7",
+        "name": "",
+        "filename": "filename",
+        "filenameType": "msg",
+        "format": "utf8",
+        "chunk": false,
+        "sendError": false,
+        "encoding": "none",
+        "allProps": false,
+        "x": 1740,
+        "y": 1820,
+        "wires": [
+            []
+        ]
+    },
+    {
+        "id": "3715c0d1368b8e18",
+        "type": "rbe",
+        "z": "d100dcfe581502c7",
+        "name": "",
+        "func": "rbe",
+        "gap": "",
+        "start": "",
+        "inout": "out",
+        "septopics": true,
+        "property": "payload.alert_level",
+        "topi": "topic",
+        "x": 1430,
+        "y": 1880,
+        "wires": [
+            [
+                "96443cdd72f355e8"
+            ]
+        ]
+    },
+    {
+        "id": "c9f87370db0c2f55",
+        "type": "debug",
+        "z": "d100dcfe581502c7",
+        "name": "debug 5",
+        "active": true,
+        "tosidebar": true,
+        "console": false,
+        "tostatus": false,
+        "complete": "false",
+        "statusVal": "",
+        "statusType": "auto",
+        "x": 2440,
+        "y": 100,
+        "wires": []
+    },
+    {
+        "id": "96d9a97b63f1c38c",
+        "type": "function",
+        "z": "d100dcfe581502c7",
+        "name": "Alert Manager",
+        "func": "const topic = msg.topic;\nconst pathParts = topic.split(\"/\");\nconst zone = pathParts[2]; // Extract zone\nconst deviceType = pathParts[4];\nconst device_Id = pathParts[5]; // Extract device ID\n\n// Check if motion detected (or other alert condition)\nconst isMotionDetected = msg.payload.motionDetected || \n                        msg.payload.data?.motionDetected ||\n                        false;\n\nif (isMotionDetected) {\n    // Create alert message\n    msg.payload = {\n        zone: zone,\n        device: deviceType,\n        alertLevel: msg.payload.alert_level,\n        timestamp: new Date().toISOString(),\n        priority: msg.payload.alert_level === \"critical\" ? 1 : \n                  msg.payload.alert_level === \"high\" ? 2 : 3    };\n\n    // Set alert topic for MQTT Out\n    msg.topic = `bank_security/zone/${zone}/alerts/access_locks/${device_Id}`;\n    \n    return msg; // Send to MQTT Out node\n}",
+        "outputs": 1,
+        "timeout": 0,
+        "noerr": 0,
+        "initialize": "",
+        "finalize": "",
+        "libs": [],
+        "x": 2220,
+        "y": 440,
+        "wires": [
+            [
+                "53f660cb6918a2fd",
+                "9c478ea28a80a23d",
+                "1dc0c1d379870d5f",
+                "95255e77d4db2757"
+            ]
+        ]
+    },
+    {
+        "id": "da3196fc4f8d78c6",
+        "type": "function",
+        "z": "d100dcfe581502c7",
+        "name": "Alert Manager",
+        "func": "const topic = msg.topic;\nconst pathParts = topic.split(\"/\");\nconst zone = pathParts[2]; // Extract zone\nconst deviceType = pathParts[4];\nconst device_Id = pathParts[5]; // Extract device ID\n\n// Check if motion detected (or other alert condition)\nconst isMotionDetected = msg.payload.motionDetected || \n                        msg.payload.data?.motionDetected ||\n                        false;\n\nif (isMotionDetected) {\n    // Create alert message\n    msg.payload = {\n        zone: zone,\n        device: deviceType,\n        alertLevel: msg.payload.alert_level,\n        timestamp: new Date().toISOString(),\n        priority: msg.payload.alert_level === \"critical\" ? 1 : \n                  msg.payload.alert_level === \"high\" ? 2 : 3    };\n\n    // Set alert topic for MQTT Out\n    msg.topic = `bank_security/zone/${zone}/alerts/smoke_detectors/${device_Id}`;\n    \n    return msg; // Send to MQTT Out node\n}",
+        "outputs": 1,
+        "timeout": 0,
+        "noerr": 0,
+        "initialize": "",
+        "finalize": "",
+        "libs": [],
+        "x": 2220,
+        "y": 520,
+        "wires": [
+            [
+                "53f660cb6918a2fd",
+                "9c478ea28a80a23d",
+                "1dc0c1d379870d5f",
+                "95255e77d4db2757"
+            ]
+        ]
+    },
+    {
+        "id": "2f5e8145170b8bba",
+        "type": "function",
+        "z": "d100dcfe581502c7",
+        "name": "Alert Manager",
+        "func": "const topic = msg.topic;\nconst pathParts = topic.split(\"/\");\nconst zone = pathParts[2]; // Extract zone\nconst deviceType = pathParts[4];\nconst device_Id = pathParts[5]; // Extract device ID\n\n// Check if motion detected (or other alert condition)\nconst isMotionDetected = msg.payload.motionDetected || \n                        msg.payload.data?.motionDetected ||\n                        false;\n\nif (isMotionDetected) {\n    // Create alert message\n    msg.payload = {\n        zone: zone,\n        device: deviceType,\n        alertLevel: msg.payload.alert_level,\n        timestamp: new Date().toISOString(),\n        priority: msg.payload.alert_level === \"critical\" ? 1 : \n                  msg.payload.alert_level === \"high\" ? 2 : 3    };\n\n    // Set alert topic for MQTT Out\n    msg.topic = `bank_security/zone/${zone}/alerts/cameras/${device_Id}`;\n    \n    return msg; // Send to MQTT Out node\n}",
+        "outputs": 1,
+        "timeout": 0,
+        "noerr": 0,
+        "initialize": "",
+        "finalize": "",
+        "libs": [],
+        "x": 2220,
+        "y": 1360,
+        "wires": [
+            [
+                "53f660cb6918a2fd",
+                "9c478ea28a80a23d",
+                "1dc0c1d379870d5f",
+                "95255e77d4db2757"
+            ]
+        ]
+    },
+    {
+        "id": "29953b57e7e9da9d",
+        "type": "function",
+        "z": "d100dcfe581502c7",
+        "name": "High security floor zone filter",
+        "func": "if(msg.payload.zone === \"high_security_floor\"){\nreturn msg;\n} else return 0;",
+        "outputs": 1,
+        "timeout": 0,
+        "noerr": 0,
+        "initialize": "",
+        "finalize": "",
+        "libs": [],
+        "x": 1800,
+        "y": 960,
+        "wires": [
+            [
+                "73ee4cfac39cd75c",
+                "4e74bffbc25a78af",
+                "ea01d0fe28781f49",
+                "17cf9c73d1af6e9c",
+                "8cb480f6570d2a87",
+                "51614223cf2ba1fe"
+            ]
+        ]
+    },
+    {
+        "id": "f1a036b6e39d483c",
+        "type": "function",
+        "z": "d100dcfe581502c7",
+        "name": "Ground Floor zone filter",
+        "func": "if (msg.payload.zone === \"ground_floor\"){\nreturn msg;\n} else return 0;",
+        "outputs": 1,
+        "timeout": 0,
+        "noerr": 0,
+        "initialize": "",
+        "finalize": "",
+        "libs": [],
+        "x": 1790,
+        "y": 900,
+        "wires": [
+            [
+                "5f95441a0701ba4d",
+                "1c50235cd82cecd7",
+                "f535d9fe04799f70",
+                "bff039d7f7c842c6",
+                "26e04356cc9e1c45",
+                "c54b9dd05c4c57be"
+            ]
+        ]
+    },
+    {
+        "id": "5f95441a0701ba4d",
+        "type": "ui_gauge",
+        "z": "d100dcfe581502c7",
+        "name": "GF Air Quality",
+        "group": "b03a1b1fa478e77e",
+        "order": 4,
+        "width": 4,
+        "height": 4,
+        "gtype": "donut",
+        "title": "GF Air Quality",
+        "label": "%",
+        "format": "{{payload.data.airQuality}}",
+        "min": "1",
+        "max": "100",
+        "colors": [
+            "#57c757",
+            "#caba07",
+            "#9b1717"
+        ],
+        "seg1": "20",
+        "seg2": "80",
+        "diff": true,
+        "className": "",
+        "x": 2220,
+        "y": 640,
+        "wires": []
+    },
+    {
+        "id": "f535d9fe04799f70",
+        "type": "ui_gauge",
+        "z": "d100dcfe581502c7",
+        "name": "GF Temperature",
+        "group": "b03a1b1fa478e77e",
+        "order": 6,
+        "width": 4,
+        "height": 4,
+        "gtype": "donut",
+        "title": "GF Temperature",
+        "label": "%",
+        "format": "{{payload.data.temperature}}",
+        "min": 0,
+        "max": "100",
+        "colors": [
+            "#81df81",
+            "#e0b000",
+            "#b91313"
+        ],
+        "seg1": "40",
+        "seg2": "80",
+        "diff": false,
+        "className": "",
+        "x": 2220,
+        "y": 760,
+        "wires": []
+    },
+    {
+        "id": "bff039d7f7c842c6",
+        "type": "ui_gauge",
+        "z": "d100dcfe581502c7",
+        "name": "GF Humidity",
+        "group": "b03a1b1fa478e77e",
+        "order": 5,
+        "width": 4,
+        "height": 4,
+        "gtype": "donut",
+        "title": "GF Humidity",
+        "label": "%",
+        "format": "{{payload.data.humidity}}",
+        "min": 0,
+        "max": "100",
+        "colors": [
+            "#6edd6e",
+            "#e29003",
+            "#c21414"
+        ],
+        "seg1": "40",
+        "seg2": "80",
+        "diff": false,
+        "className": "",
+        "x": 2210,
+        "y": 820,
+        "wires": []
+    },
+    {
+        "id": "26e04356cc9e1c45",
+        "type": "ui_text",
+        "z": "d100dcfe581502c7",
+        "group": "b03a1b1fa478e77e",
+        "order": 8,
+        "width": 12,
+        "height": 1,
+        "name": "GF Alert Level",
+        "label": "GF Alert Level",
+        "format": "{{msg.payload.data.alertLevel}}",
+        "layout": "row-center",
+        "className": "",
+        "style": false,
+        "font": "",
+        "fontSize": 16,
+        "color": "#000000",
+        "x": 2220,
+        "y": 880,
+        "wires": []
+    },
+    {
+        "id": "1c50235cd82cecd7",
+        "type": "ui_gauge",
+        "z": "d100dcfe581502c7",
+        "name": "GF Smoke Density",
+        "group": "b03a1b1fa478e77e",
+        "order": 3,
+        "width": 4,
+        "height": 4,
+        "gtype": "donut",
+        "title": "GF Smoke Density",
+        "label": "%",
+        "format": "{{payload.data.smokeDensity}}",
+        "min": 0,
+        "max": "100",
+        "colors": [
+            "#6edd6e",
+            "#e29003",
+            "#c21414"
+        ],
+        "seg1": "40",
+        "seg2": "80",
+        "diff": false,
+        "className": "",
+        "x": 2230,
+        "y": 700,
+        "wires": []
+    },
+    {
+        "id": "c54b9dd05c4c57be",
+        "type": "ui_text",
+        "z": "d100dcfe581502c7",
+        "group": "b03a1b1fa478e77e",
+        "order": 2,
+        "width": 16,
+        "height": 1,
+        "name": "",
+        "label": "Ground Floor",
+        "format": "",
+        "layout": "row-left",
+        "className": "",
+        "style": false,
+        "font": "",
+        "fontSize": 16,
+        "color": "#000000",
+        "x": 2210,
+        "y": 580,
+        "wires": []
+    },
+    {
+        "id": "73ee4cfac39cd75c",
+        "type": "ui_gauge",
+        "z": "d100dcfe581502c7",
+        "name": "HSF Air Quality",
+        "group": "b03a1b1fa478e77e",
+        "order": 13,
+        "width": 4,
+        "height": 4,
+        "gtype": "donut",
+        "title": "HSF Air Quality",
+        "label": "%",
+        "format": "{{payload.data.airQuality}}",
+        "min": "1",
+        "max": "100",
+        "colors": [
+            "#57c757",
+            "#caba07",
+            "#9b1717"
+        ],
+        "seg1": "20",
+        "seg2": "80",
+        "diff": true,
+        "className": "",
+        "x": 2220,
+        "y": 1020,
+        "wires": []
+    },
+    {
+        "id": "4e74bffbc25a78af",
+        "type": "ui_gauge",
+        "z": "d100dcfe581502c7",
+        "name": "HSF Temperature",
+        "group": "b03a1b1fa478e77e",
+        "order": 15,
+        "width": 4,
+        "height": 4,
+        "gtype": "donut",
+        "title": "HFS Temperature",
+        "label": "%",
+        "format": "{{payload.data.temperature}}",
+        "min": 0,
+        "max": "100",
+        "colors": [
+            "#81df81",
+            "#e0b000",
+            "#b91313"
+        ],
+        "seg1": "40",
+        "seg2": "80",
+        "diff": false,
+        "className": "",
+        "x": 2230,
+        "y": 1140,
+        "wires": []
+    },
+    {
+        "id": "ea01d0fe28781f49",
+        "type": "ui_gauge",
+        "z": "d100dcfe581502c7",
+        "name": "HSF Humidity",
+        "group": "b03a1b1fa478e77e",
+        "order": 14,
+        "width": 4,
+        "height": 4,
+        "gtype": "donut",
+        "title": "HFS Humidity",
+        "label": "%",
+        "format": "{{payload.data.humidity}}",
+        "min": 0,
+        "max": "100",
+        "colors": [
+            "#6edd6e",
+            "#e29003",
+            "#c21414"
+        ],
+        "seg1": "40",
+        "seg2": "80",
+        "diff": false,
+        "className": "",
+        "x": 2220,
+        "y": 1200,
+        "wires": []
+    },
+    {
+        "id": "17cf9c73d1af6e9c",
+        "type": "ui_text",
+        "z": "d100dcfe581502c7",
+        "group": "b03a1b1fa478e77e",
+        "order": 17,
+        "width": 12,
+        "height": 1,
+        "name": "HSF Alert Level",
+        "label": "HFS Alert Level",
+        "format": "{{msg.payload.data.alertLevel}}",
+        "layout": "row-center",
+        "className": "",
+        "style": false,
+        "font": "",
+        "fontSize": 16,
+        "color": "#000000",
+        "x": 2220,
+        "y": 1260,
+        "wires": []
+    },
+    {
+        "id": "8cb480f6570d2a87",
+        "type": "ui_gauge",
+        "z": "d100dcfe581502c7",
+        "name": "HSF Smoke Density",
+        "group": "b03a1b1fa478e77e",
+        "order": 12,
+        "width": 4,
+        "height": 4,
+        "gtype": "donut",
+        "title": "HFS Smoke Density",
+        "label": "%",
+        "format": "{{payload.data.smokeDensity}}",
+        "min": 0,
+        "max": "100",
+        "colors": [
+            "#6edd6e",
+            "#e29003",
+            "#c21414"
+        ],
+        "seg1": "40",
+        "seg2": "80",
+        "diff": false,
+        "className": "",
+        "x": 2240,
+        "y": 1080,
+        "wires": []
+    },
+    {
+        "id": "51614223cf2ba1fe",
+        "type": "ui_text",
+        "z": "d100dcfe581502c7",
+        "group": "b03a1b1fa478e77e",
+        "order": 11,
+        "width": 16,
+        "height": 1,
+        "name": "",
+        "label": "High security floor",
+        "format": "",
+        "layout": "row-left",
+        "className": "",
+        "style": false,
+        "font": "",
+        "fontSize": 16,
+        "color": "#000000",
+        "x": 2230,
+        "y": 960,
+        "wires": []
+    },
+    {
+        "id": "f02259abdd832ae2",
+        "type": "debug",
+        "z": "d100dcfe581502c7",
+        "name": "debug 6",
+        "active": true,
+        "tosidebar": true,
+        "console": false,
+        "tostatus": false,
+        "complete": "payload",
+        "targetType": "msg",
+        "statusVal": "",
+        "statusType": "auto",
+        "x": 1740,
+        "y": 1020,
+        "wires": []
+    },
+    {
+        "id": "cee4b634a5189478",
+        "type": "debug",
+        "z": "d100dcfe581502c7",
+        "name": "debug 4",
+        "active": true,
+        "tosidebar": true,
+        "console": false,
+        "tostatus": false,
+        "complete": "false",
+        "statusVal": "",
+        "statusType": "auto",
+        "x": 1020,
+        "y": 140,
+        "wires": []
+    },
+    {
+        "id": "2a495ace92803c40",
+        "type": "debug",
+        "z": "d100dcfe581502c7",
+        "name": "debug 23",
+        "active": true,
+        "tosidebar": true,
+        "console": false,
+        "tostatus": false,
+        "complete": "false",
+        "statusVal": "",
+        "statusType": "auto",
+        "x": 1120,
+        "y": 1960,
+        "wires": []
+    },
+    {
+        "id": "5313671df46d3638",
+        "type": "debug",
+        "z": "d100dcfe581502c7",
+        "name": "debug 24",
+        "active": true,
+        "tosidebar": true,
+        "console": false,
+        "tostatus": false,
+        "complete": "false",
+        "statusVal": "",
+        "statusType": "auto",
+        "x": 1440,
+        "y": 1380,
+        "wires": []
+    },
+    {
+        "id": "a00fadd8fe4f5d02",
+        "type": "debug",
+        "z": "d100dcfe581502c7",
+        "name": "debug 25",
+        "active": true,
+        "tosidebar": true,
+        "console": false,
+        "tostatus": false,
+        "complete": "false",
+        "statusVal": "",
+        "statusType": "auto",
+        "x": 980,
+        "y": 500,
+        "wires": []
+    },
+    {
+        "id": "f4d3a9059d5baa76",
+        "type": "debug",
+        "z": "d100dcfe581502c7",
+        "name": "debug 26",
+        "active": true,
+        "tosidebar": true,
+        "console": false,
+        "tostatus": false,
+        "complete": "false",
+        "statusVal": "",
+        "statusType": "auto",
+        "x": 1440,
+        "y": 1140,
+        "wires": []
+    },
+    {
+        "id": "53f660cb6918a2fd",
+        "type": "function",
+        "z": "d100dcfe581502c7",
+        "name": "External Perimeter Alert processor",
+        "func": "const { zone, device, alertLevel, timestamp, priority } = msg.payload;\n\nfunction determineActuatorAction() {\n\n    // Simple activation rules for perimeter security\n    let sirenActive = false;\n    let beaconActive = false;\n    let sirenVolume = 0;\n    let sirenPattern = \"off\";\n    let sirenDuration = 0;\n    let beaconColor = \"GREEN\";\n    let beaconBrightness = 0;\n    let beaconPattern = \"off\";\n\n    // Determine activation based on device type and alert level (perimeter-specific)\n    if (device.toLowerCase().includes(\"laser\") || device.toLowerCase().includes(\"scanner\")) {\n        // Laser scanner perimeter breach rules - HIGHEST PRIORITY\n        if (alertLevel === \"critical\") {\n            sirenActive = true;\n            sirenVolume = 100;\n            sirenPattern = \"perimeter_breach\";\n            sirenDuration = 120;\n            beaconActive = true;\n            beaconColor = \"RED\";\n            beaconBrightness = 100;\n            beaconPattern = \"strobe\";\n        } else if (alertLevel === \"high\") {\n            sirenActive = true;\n            sirenVolume = 95;\n            sirenPattern = \"warning\";\n            sirenDuration = 90;\n            beaconActive = true;\n            beaconColor = \"RED\";\n            beaconBrightness = 95;\n            beaconPattern = \"fast_flash\";\n        } else if (alertLevel === \"medium\") {\n            sirenActive = true;\n            sirenVolume = 80;\n            sirenPattern = \"alert\";\n            sirenDuration = 60;\n            beaconActive = true;\n            beaconColor = \"ORANGE\";\n            beaconBrightness = 80;\n            beaconPattern = \"slow_flash\";\n        } else if (alertLevel === \"low\") {\n            beaconActive = true;\n            beaconColor = \"YELLOW\";\n            beaconBrightness = 60;\n            beaconPattern = \"steady\";\n        }\n    } else if (device.toLowerCase().includes(\"pir\") || device.toLowerCase().includes(\"beam\")) {\n        // PIR beam perimeter detection rules\n        if (alertLevel === \"critical\") {\n            sirenActive = true;\n            sirenVolume = 95;\n            sirenPattern = \"intrusion_alarm\";\n            sirenDuration = 90;\n            beaconActive = true;\n            beaconColor = \"RED\";\n            beaconBrightness = 100;\n            beaconPattern = \"strobe\";\n        } else if (alertLevel === \"high\") {\n            sirenActive = true;\n            sirenVolume = 85;\n            sirenPattern = \"warning\";\n            sirenDuration = 60;\n            beaconActive = true;\n            beaconColor = \"ORANGE\";\n            beaconBrightness = 90;\n            beaconPattern = \"fast_flash\";\n        } else if (alertLevel === \"medium\") {\n            beaconActive = true;\n            beaconColor = \"ORANGE\";\n            beaconBrightness = 75;\n            beaconPattern = \"slow_flash\";\n        } else if (alertLevel === \"low\") {\n            beaconActive = true;\n            beaconColor = \"YELLOW\";\n            beaconBrightness = 50;\n            beaconPattern = \"steady\";\n        }\n    } else if (device.toLowerCase().includes(\"camera\")) {\n        // Perimeter camera security rules\n        if (alertLevel === \"critical\") {\n            sirenActive = true;\n            sirenVolume = 90;\n            sirenPattern = \"security_breach\";\n            sirenDuration = 75;\n            beaconActive = true;\n            beaconColor = \"RED\";\n            beaconBrightness = 100;\n            beaconPattern = \"fast_flash\";\n        } else if (alertLevel === \"high\") {\n            sirenActive = true;\n            sirenVolume = 75;\n            sirenPattern = \"alert\";\n            sirenDuration = 45;\n            beaconActive = true;\n            beaconColor = \"ORANGE\";\n            beaconBrightness = 85;\n            beaconPattern = \"slow_flash\";\n        } else if (alertLevel === \"medium\") {\n            beaconActive = true;\n            beaconColor = \"BLUE\";\n            beaconBrightness = 70;\n            beaconPattern = \"steady\";\n        } else if (alertLevel === \"low\") {\n            beaconActive = true;\n            beaconColor = \"BLUE\";\n            beaconBrightness = 40;\n            beaconPattern = \"steady\";\n        }\n    } else if (device.toLowerCase().includes(\"gate\") || device.toLowerCase().includes(\"access\")) {\n        // Perimeter gate/access control rules\n        if (alertLevel === \"critical\") {\n            sirenActive = true;\n            sirenVolume = 90;\n            sirenPattern = \"unauthorized_access\";\n            sirenDuration = 60;\n            beaconActive = true;\n            beaconColor = \"RED\";\n            beaconBrightness = 100;\n            beaconPattern = \"strobe\";\n        } else if (alertLevel === \"high\") {\n            sirenActive = true;\n            sirenVolume = 80;\n            sirenPattern = \"warning\";\n            sirenDuration = 30;\n            beaconActive = true;\n            beaconColor = \"ORANGE\";\n            beaconBrightness = 85;\n            beaconPattern = \"fast_flash\";\n        } else if (alertLevel === \"medium\") {\n            beaconActive = true;\n            beaconColor = \"YELLOW\";\n            beaconBrightness = 65;\n            beaconPattern = \"slow_flash\";\n        } else if (alertLevel === \"low\") {\n            beaconActive = true;\n            beaconColor = \"BLUE\";\n            beaconBrightness = 45;\n            beaconPattern = \"steady\";\n        }\n    } else {\n        // Generic perimeter device rules\n        if (alertLevel === \"critical\") {\n            sirenActive = true;\n            sirenVolume = 85;\n            sirenPattern = \"continuous\";\n            sirenDuration = 60;\n            beaconActive = true;\n            beaconColor = \"RED\";\n            beaconBrightness = 95;\n            beaconPattern = \"strobe\";\n        } else if (alertLevel === \"high\") {\n            beaconActive = true;\n            beaconColor = \"ORANGE\";\n            beaconBrightness = 80;\n            beaconPattern = \"fast_flash\";\n        } else if (alertLevel === \"medium\") {\n            beaconActive = true;\n            beaconColor = \"YELLOW\";\n            beaconBrightness = 60;\n            beaconPattern = \"slow_flash\";\n        }\n    }\n\n    // Return simple flat object with external perimeter actuator IDs\n    return {\n        zone: zone,\n        device: device,\n        alertLevel: alertLevel,\n        priority: priority,\n        timestamp: timestamp,\n        processedAt: new Date().toISOString(),\n        siren_active: sirenActive,\n        siren_volume: sirenVolume,\n        siren_pattern: sirenPattern,\n        siren_duration: sirenDuration,\n        beacon_active: beaconActive,\n        beacon_color: beaconColor,\n        beacon_brightness: beaconBrightness,\n        beacon_pattern: beaconPattern,\n        SIREN_001_active: sirenActive,\n        SIREN_002_active: sirenActive,\n        SIREN_003_active: sirenActive,\n        SIREN_004_active: sirenActive,\n        BEACON_001_active: beaconActive,\n        BEACON_002_active: beaconActive,\n        BEACON_003_active: beaconActive,\n        BEACON_004_active: beaconActive\n    };\n    \n}\n\nlet result = \"\";\n\nif (zone === \"external_perimeter\") {\n    result = determineActuatorAction();\n} else return null;\n\nif (result) {\n    // Log simple status with perimeter context\n    node.log(`PERIMETER: ${result.device} ${result.alertLevel}: Siren=${result.siren_active}, Beacon=${result.beacon_active}`);\n\n    // Return single message with flat structure\n    return {\n        topic: `bank_security/zone/external_perimeter/actuators/status`,\n        payload: result\n    };\n    \n} else {\n    node.log(`Alert ignored: Not for external perimeter`);\n    return null;\n}",
+        "outputs": 1,
+        "timeout": 0,
+        "noerr": 0,
+        "initialize": "",
+        "finalize": "",
+        "libs": [],
+        "x": 2600,
+        "y": 740,
+        "wires": [
+            [
+                "7023adbecf0db908"
+            ]
+        ]
+    },
+    {
+        "id": "658ac1c785d527be",
+        "type": "function",
+        "z": "d100dcfe581502c7",
+        "name": "Alert Manager",
+        "func": "const data = msg.payload.data\n\n// Current timestamp\nconst timestamp = new Date().toISOString();\n\n\nmsg.payload = {\n  timestamp: timestamp,\n  obstacleDetected: data.obstacleDetected,\n  distance: data.distance,\n  beamStatus: msg.payload.beamStatus,\n  alertLevel: msg.payload.data.alert_level,\n  recording_required: msg.payload.recording_required,\n};\n\n// Set node status\nnode.status({\n  fill: msg.payload.obstacleDetected ? \"red\" : \"green\",\n  shape: \"dot\",\n  text: `Obstacle detected: ${msg.payload.obstacleDetected}`,\n});\n\nreturn msg;",
+        "outputs": 1,
+        "timeout": 0,
+        "noerr": 0,
+        "initialize": "",
+        "finalize": "",
+        "libs": [],
+        "x": 2220,
+        "y": 1720,
+        "wires": [
+            [
+                "53f660cb6918a2fd",
+                "9c478ea28a80a23d",
+                "1dc0c1d379870d5f",
+                "95255e77d4db2757"
+            ]
+        ]
+    },
+    {
+        "id": "9c478ea28a80a23d",
+        "type": "function",
+        "z": "d100dcfe581502c7",
+        "name": "Ground Floor Alert processor",
+        "func": "const { zone, device, alertLevel, timestamp, priority } = msg.payload;\n\nfunction determineActuatorAction() {\n\n    // Only process ground floor alerts\n    if (zone !== \"ground_floor\") {\n        return null;\n    }\n\n    // Simple activation rules\n    let sirenActive = false;\n    let beaconActive = false;\n    let sirenVolume = 0;\n    let sirenPattern = \"off\";\n    let sirenDuration = 0;\n    let beaconColor = \"GREEN\";\n    let beaconBrightness = 0;\n    let beaconPattern = \"off\";\n\n    // Determine activation based on device type and alert level\n    if (device.toLowerCase().includes(\"smoke\")) {\n        // Smoke detector rules - more aggressive for public area\n        if (alertLevel === \"critical\") {\n            sirenActive = true;\n            sirenVolume = 100;\n            sirenPattern = \"fire_alarm\";\n            sirenDuration = 300; // 5 minutes for fire\n            beaconActive = true;\n            beaconColor = \"RED\";\n            beaconBrightness = 100;\n            beaconPattern = \"strobe\";\n        } else if (alertLevel === \"high\") {\n            sirenActive = true;\n            sirenVolume = 95;\n            sirenPattern = \"warning\";\n            sirenDuration = 120; // 2 minutes\n            beaconActive = true;\n            beaconColor = \"RED\";\n            beaconBrightness = 95;\n            beaconPattern = \"fast_flash\";\n        } else if (alertLevel === \"medium\") {\n            sirenActive = true;\n            sirenVolume = 80;\n            sirenPattern = \"alert\";\n            sirenDuration = 60;\n            beaconActive = true;\n            beaconColor = \"ORANGE\";\n            beaconBrightness = 80;\n            beaconPattern = \"slow_flash\";\n        } else if (alertLevel === \"low\") {\n            beaconActive = true;\n            beaconColor = \"YELLOW\";\n            beaconBrightness = 60;\n            beaconPattern = \"steady\";\n        }\n    } else if (device.toLowerCase().includes(\"lock\") || device.toLowerCase().includes(\"access\") || device.toLowerCase().includes(\"keypad\")) {\n        // Access control rules - important for public entrance security\n        if (alertLevel === \"critical\") {\n            sirenActive = true;\n            sirenVolume = 90;\n            sirenPattern = \"security_breach\";\n            sirenDuration = 45;\n            beaconActive = true;\n            beaconColor = \"RED\";\n            beaconBrightness = 100;\n            beaconPattern = \"strobe\";\n        } else if (alertLevel === \"high\") {\n            sirenActive = true;\n            sirenVolume = 75;\n            sirenPattern = \"warning\";\n            sirenDuration = 20;\n            beaconActive = true;\n            beaconColor = \"ORANGE\";\n            beaconBrightness = 85;\n            beaconPattern = \"fast_flash\";\n        } else if (alertLevel === \"medium\") {\n            beaconActive = true;\n            beaconColor = \"YELLOW\";\n            beaconBrightness = 70;\n            beaconPattern = \"slow_flash\";\n        } else if (alertLevel === \"low\") {\n            beaconActive = true;\n            beaconColor = \"BLUE\";\n            beaconBrightness = 50;\n            beaconPattern = \"steady\";\n        }\n    } else if (device.toLowerCase().includes(\"pir\") || device.toLowerCase().includes(\"motion\") || device.toLowerCase().includes(\"bosch\") || device.toLowerCase().includes(\"honeywell\")) {\n        // Motion sensor rules - moderate response for public areas\n        if (alertLevel === \"critical\") {\n            sirenActive = true;\n            sirenVolume = 85;\n            sirenPattern = \"continuous\";\n            sirenDuration = 30;\n            beaconActive = true;\n            beaconColor = \"RED\";\n            beaconBrightness = 90;\n            beaconPattern = \"fast_flash\";\n        } else if (alertLevel === \"high\") {\n            sirenActive = true;\n            sirenVolume = 60; // Lower for public areas\n            sirenPattern = \"pulsed\";\n            sirenDuration = 15;\n            beaconActive = true;\n            beaconColor = \"ORANGE\";\n            beaconBrightness = 75;\n            beaconPattern = \"slow_flash\";\n        } else if (alertLevel === \"medium\") {\n            beaconActive = true;\n            beaconColor = \"YELLOW\";\n            beaconBrightness = 60;\n            beaconPattern = \"steady\";\n        }\n    } else if (device.toLowerCase().includes(\"camera\") || device.toLowerCase().includes(\"axis\")) {\n        // Camera security rules - visual deterrent focus\n        if (alertLevel === \"critical\") {\n            sirenActive = true;\n            sirenVolume = 80;\n            sirenPattern = \"security_breach\";\n            sirenDuration = 60;\n            beaconActive = true;\n            beaconColor = \"RED\";\n            beaconBrightness = 100;\n            beaconPattern = \"fast_flash\";\n        } else if (alertLevel === \"high\") {\n            beaconActive = true;\n            beaconColor = \"ORANGE\";\n            beaconBrightness = 85;\n            beaconPattern = \"slow_flash\";\n        } else if (alertLevel === \"medium\") {\n            beaconActive = true;\n            beaconColor = \"BLUE\";\n            beaconBrightness = 70;\n            beaconPattern = \"steady\";\n        }\n    } else if (device.toLowerCase().includes(\"hid\") || device.toLowerCase().includes(\"prox\")) {\n        // Card reader rules - access control specific\n        if (alertLevel === \"critical\") {\n            sirenActive = true;\n            sirenVolume = 85;\n            sirenPattern = \"alarm\";\n            sirenDuration = 30;\n            beaconActive = true;\n            beaconColor = \"RED\";\n            beaconBrightness = 100;\n            beaconPattern = \"strobe\";\n        } else if (alertLevel === \"high\") {\n            beaconActive = true;\n            beaconColor = \"ORANGE\";\n            beaconBrightness = 80;\n            beaconPattern = \"fast_flash\";\n        } else if (alertLevel === \"medium\") {\n            beaconActive = true;\n            beaconColor = \"YELLOW\";\n            beaconBrightness = 60;\n            beaconPattern = \"slow_flash\";\n        }\n    }\n\n    // Return simple flat object with ground floor device IDs\n    return {\n        zone: zone,\n        device: device,\n        alertLevel: alertLevel,\n        priority: priority,\n        timestamp: timestamp,\n        processedAt: new Date().toISOString(),\n        siren_active: sirenActive,\n        siren_volume: sirenVolume,\n        siren_pattern: sirenPattern,\n        siren_duration: sirenDuration,\n        beacon_active: beaconActive,\n        beacon_color: beaconColor,\n        beacon_brightness: beaconBrightness,\n        beacon_pattern: beaconPattern,\n        // Ground Floor Siren IDs\n        SIREN_GF_001_active: sirenActive,\n        SIREN_GF_002_active: sirenActive,\n        SIREN_GF_003_active: sirenActive,\n        SIREN_GF_004_active: sirenActive,\n        // Ground Floor Beacon IDs\n        BEACON_GF_001_active: beaconActive,\n        BEACON_GF_002_active: beaconActive,\n        BEACON_GF_003_active: beaconActive,\n        BEACON_GF_004_active: beaconActive\n    };\n}\n\nlet result = \"\";\n\nif (zone === \"ground_floor\") {\n    result = determineActuatorAction();\n} else return null;\n\nif (result) {\n    // Log simple status\n    node.log(`Ground Floor ${result.device} ${result.alertLevel}: Siren=${result.siren_active}, Beacon=${result.beacon_active}`);\n\n    // Return single message with flat structure\n    return {\n        topic: `bank_security/zone/ground_floor/actuators/status`,\n        payload: result\n    };\n} else {\n    node.log(`Alert ignored: Not for ground floor`);\n    return null;\n}",
+        "outputs": 1,
+        "timeout": 0,
+        "noerr": 0,
+        "initialize": "",
+        "finalize": "",
+        "libs": [],
+        "x": 2580,
+        "y": 840,
+        "wires": [
+            [
+                "c52b8bb1791deafd"
+            ]
+        ]
+    },
+    {
+        "id": "95255e77d4db2757",
+        "type": "function",
+        "z": "d100dcfe581502c7",
+        "name": "Office Floor Alert processor",
+        "func": "const { zone, device, alertLevel, timestamp, priority } = msg.payload;\n\nfunction determineActuatorAction() {\n\n    // Simple activation rules\n    let sirenActive = false;\n    let beaconActive = false;\n    let sirenVolume = 0;\n    let sirenPattern = \"off\";\n    let sirenDuration = 0;\n    let beaconColor = \"GREEN\";\n    let beaconBrightness = 0;\n    let beaconPattern = \"off\";\n\n    // Determine activation based on device type and alert level\n    if (device.toLowerCase().includes(\"smoke\")) {\n        // Smoke detector rules\n        if (alertLevel === \"critical\") {\n            sirenActive = true;\n            sirenVolume = 100;\n            sirenPattern = \"fire_alarm\";\n            sirenDuration = 300;\n            beaconActive = true;\n            beaconColor = \"RED\";\n            beaconBrightness = 100;\n            beaconPattern = \"strobe\";\n        } else if (alertLevel === \"high\") {\n            sirenActive = true;\n            sirenVolume = 90;\n            sirenPattern = \"warning\";\n            sirenDuration = 60;\n            beaconActive = true;\n            beaconColor = \"RED\";\n            beaconBrightness = 90;\n            beaconPattern = \"fast_flash\";\n        } else if (alertLevel === \"medium\") {\n            sirenActive = true;\n            sirenVolume = 70;\n            sirenPattern = \"alert\";\n            sirenDuration = 30;\n            beaconActive = true;\n            beaconColor = \"ORANGE\";\n            beaconBrightness = 70;\n            beaconPattern = \"slow_flash\";\n        } else if (alertLevel === \"low\") {\n            beaconActive = true;\n            beaconColor = \"YELLOW\";\n            beaconBrightness = 50;\n            beaconPattern = \"steady\";\n        }\n    } else if (device.toLowerCase().includes(\"lock\") || device.toLowerCase().includes(\"access\")) {\n        // Access lock rules\n        if (alertLevel === \"critical\") {\n            sirenActive = true;\n            sirenVolume = 85;\n            sirenPattern = \"alarm\";\n            sirenDuration = 30;\n            beaconActive = true;\n            beaconColor = \"RED\";\n            beaconBrightness = 100;\n            beaconPattern = \"strobe\";\n        } else if (alertLevel === \"high\") {\n            sirenActive = true;\n            sirenVolume = 70;\n            sirenPattern = \"warning\";\n            sirenDuration = 15;\n            beaconActive = true;\n            beaconColor = \"ORANGE\";\n            beaconBrightness = 80;\n            beaconPattern = \"fast_flash\";\n        } else if (alertLevel === \"medium\") {\n            beaconActive = true;\n            beaconColor = \"YELLOW\";\n            beaconBrightness = 60;\n            beaconPattern = \"slow_flash\";\n        } else if (alertLevel === \"low\") {\n            beaconActive = true;\n            beaconColor = \"BLUE\";\n            beaconBrightness = 40;\n            beaconPattern = \"steady\";\n        }\n    } else if (device.toLowerCase().includes(\"pir\") || device.toLowerCase().includes(\"motion\")) {\n        // PIR sensor rules\n        if (alertLevel === \"critical\") {\n            sirenActive = true;\n            sirenVolume = 90;\n            sirenPattern = \"continuous\";\n            sirenDuration = 60;\n            beaconActive = true;\n            beaconColor = \"RED\";\n            beaconBrightness = 100;\n            beaconPattern = \"fast_flash\";\n        } else if (alertLevel === \"high\") {\n            beaconActive = true;\n            beaconColor = \"ORANGE\";\n            beaconBrightness = 80;\n            beaconPattern = \"slow_flash\";\n        } else if (alertLevel === \"medium\") {\n            beaconActive = true;\n            beaconColor = \"YELLOW\";\n            beaconBrightness = 60;\n            beaconPattern = \"steady\";\n        }\n    } else if (device.toLowerCase().includes(\"camera\")) {\n        // Camera rules\n        if (alertLevel === \"critical\") {\n            sirenActive = true;\n            sirenVolume = 80;\n            sirenPattern = \"security_breach\";\n            sirenDuration = 45;\n            beaconActive = true;\n            beaconColor = \"RED\";\n            beaconBrightness = 100;\n            beaconPattern = \"fast_flash\";\n        } else if (alertLevel === \"high\") {\n            beaconActive = true;\n            beaconColor = \"ORANGE\";\n            beaconBrightness = 80;\n            beaconPattern = \"slow_flash\";\n        } else if (alertLevel === \"medium\") {\n            beaconActive = true;\n            beaconColor = \"BLUE\";\n            beaconBrightness = 60;\n            beaconPattern = \"steady\";\n        }\n    }\n\n    // Return simple flat object with Office Floor 3 IDs\n    return {\n        zone: zone,\n        device: device,\n        alertLevel: alertLevel,\n        priority: priority,\n        timestamp: timestamp,\n        processedAt: new Date().toISOString(),\n        siren_active: sirenActive,\n        siren_volume: sirenVolume,\n        siren_pattern: sirenPattern,\n        siren_duration: sirenDuration,\n        beacon_active: beaconActive,\n        beacon_color: beaconColor,\n        beacon_brightness: beaconBrightness,\n        beacon_pattern: beaconPattern,\n        SIREN_OF3_001_active: sirenActive,\n        SIREN_OF3_002_active: sirenActive,\n        SIREN_OF3_003_active: sirenActive,\n        SIREN_OF3_004_active: sirenActive,\n        BEACON_OF3_001_active: beaconActive,\n        BEACON_OF3_002_active: beaconActive,\n        BEACON_OF3_003_active: beaconActive,\n        BEACON_OF3_004_active: beaconActive\n    };\n}\n\nlet result = \"\";\n\nif (zone.startsWith(\"office_floor\")) {\n    result = determineActuatorAction();\n} else return null;\n\nif (result) {\n    // Log simple status\n    node.log(`${result.device} ${result.alertLevel}: Siren=${result.siren_active}, Beacon=${result.beacon_active}`);\n\n    // Return single message with flat structure\n    return {\n        topic: `bank_security/zone/${zone}/actuators/status`,\n        payload: result\n    };\n} else {\n    node.log(`Alert ignored: Not for office floors`);\n    return null;\n}",
+        "outputs": 1,
+        "timeout": 0,
+        "noerr": 0,
+        "initialize": "",
+        "finalize": "",
+        "libs": [],
+        "x": 2580,
+        "y": 1040,
+        "wires": [
+            [
+                "0a076dc5eefe0e6d"
+            ]
+        ]
+    },
+    {
+        "id": "1dc0c1d379870d5f",
+        "type": "function",
+        "z": "d100dcfe581502c7",
+        "name": "High Security Floor Alert processor",
+        "func": "const { zone, device, alertLevel, timestamp, priority } = msg.payload;\n\nfunction determineActuatorAction() {\n\n    // Enhanced activation rules for high security environment\n    let sirenActive = false;\n    let beaconActive = false;\n    let sirenVolume = 0;\n    let sirenPattern = \"off\";\n    let sirenDuration = 0;\n    let beaconColor = \"GREEN\";\n    let beaconBrightness = 0;\n    let beaconPattern = \"off\";\n\n    // Determine activation based on device type and alert level\n    if (device.toLowerCase().includes(\"smoke\") || device.toLowerCase().includes(\"i3\")) {\n        // Smoke detector rules - Enhanced for high security\n        if (alertLevel === \"critical\") {\n            sirenActive = true;\n            sirenVolume = 100;\n            sirenPattern = \"fire_alarm\";\n            sirenDuration = 600; // 10 minutes for critical fire\n            beaconActive = true;\n            beaconColor = \"RED\";\n            beaconBrightness = 100;\n            beaconPattern = \"strobe\";\n        } else if (alertLevel === \"high\") {\n            sirenActive = true;\n            sirenVolume = 95;\n            sirenPattern = \"warning\";\n            sirenDuration = 180; // 3 minutes\n            beaconActive = true;\n            beaconColor = \"RED\";\n            beaconBrightness = 95;\n            beaconPattern = \"fast_flash\";\n        } else if (alertLevel === \"medium\") {\n            sirenActive = true;\n            sirenVolume = 85;\n            sirenPattern = \"alert\";\n            sirenDuration = 90;\n            beaconActive = true;\n            beaconColor = \"ORANGE\";\n            beaconBrightness = 85;\n            beaconPattern = \"slow_flash\";\n        } else if (alertLevel === \"low\") {\n            beaconActive = true;\n            beaconColor = \"YELLOW\";\n            beaconBrightness = 70;\n            beaconPattern = \"steady\";\n        }\n    } else if (device.toLowerCase().includes(\"lock\") || device.toLowerCase().includes(\"access\") || device.toLowerCase().includes(\"schlage\") || device.toLowerCase().includes(\"hid\")) {\n        // Access control rules - Enhanced for high security\n        if (alertLevel === \"critical\") {\n            sirenActive = true;\n            sirenVolume = 95;\n            sirenPattern = \"security_breach\";\n            sirenDuration = 120; // 2 minutes for critical breach\n            beaconActive = true;\n            beaconColor = \"RED\";\n            beaconBrightness = 100;\n            beaconPattern = \"strobe\";\n        } else if (alertLevel === \"high\") {\n            sirenActive = true;\n            sirenVolume = 85;\n            sirenPattern = \"alarm\";\n            sirenDuration = 60;\n            beaconActive = true;\n            beaconColor = \"RED\";\n            beaconBrightness = 90;\n            beaconPattern = \"fast_flash\";\n        } else if (alertLevel === \"medium\") {\n            sirenActive = true;\n            sirenVolume = 75;\n            sirenPattern = \"warning\";\n            sirenDuration = 30;\n            beaconActive = true;\n            beaconColor = \"ORANGE\";\n            beaconBrightness = 80;\n            beaconPattern = \"slow_flash\";\n        } else if (alertLevel === \"low\") {\n            beaconActive = true;\n            beaconColor = \"BLUE\";\n            beaconBrightness = 60;\n            beaconPattern = \"steady\";\n        }\n    } else if (device.toLowerCase().includes(\"pir\") || device.toLowerCase().includes(\"motion\") || device.toLowerCase().includes(\"bosch\") || device.toLowerCase().includes(\"honeywell\")) {\n        // Motion sensor rules - Enhanced for high security\n        if (alertLevel === \"critical\") {\n            sirenActive = true;\n            sirenVolume = 90;\n            sirenPattern = \"continuous\";\n            sirenDuration = 90; // 1.5 minutes\n            beaconActive = true;\n            beaconColor = \"RED\";\n            beaconBrightness = 100;\n            beaconPattern = \"fast_flash\";\n        } else if (alertLevel === \"high\") {\n            sirenActive = true;\n            sirenVolume = 80;\n            sirenPattern = \"pulsed\";\n            sirenDuration = 45;\n            beaconActive = true;\n            beaconColor = \"ORANGE\";\n            beaconBrightness = 85;\n            beaconPattern = \"slow_flash\";\n        } else if (alertLevel === \"medium\") {\n            beaconActive = true;\n            beaconColor = \"YELLOW\";\n            beaconBrightness = 70;\n            beaconPattern = \"steady\";\n        }\n    } else if (device.toLowerCase().includes(\"camera\") || device.toLowerCase().includes(\"axis\")) {\n        // Camera rules - Enhanced for high security\n        if (alertLevel === \"critical\") {\n            sirenActive = true;\n            sirenVolume = 90;\n            sirenPattern = \"security_breach\";\n            sirenDuration = 90;\n            beaconActive = true;\n            beaconColor = \"RED\";\n            beaconBrightness = 100;\n            beaconPattern = \"strobe\";\n        } else if (alertLevel === \"high\") {\n            sirenActive = true;\n            sirenVolume = 75;\n            sirenPattern = \"warning\";\n            sirenDuration = 45;\n            beaconActive = true;\n            beaconColor = \"ORANGE\";\n            beaconBrightness = 85;\n            beaconPattern = \"fast_flash\";\n        } else if (alertLevel === \"medium\") {\n            beaconActive = true;\n            beaconColor = \"BLUE\";\n            beaconBrightness = 70;\n            beaconPattern = \"steady\";\n        }\n    } else if (device.toLowerCase().includes(\"air\") || device.toLowerCase().includes(\"gradient\")) {\n        // Air quality sensor rules - High security server room protection\n        if (alertLevel === \"critical\") {\n            sirenActive = true;\n            sirenVolume = 85;\n            sirenPattern = \"environmental_alert\";\n            sirenDuration = 120;\n            beaconActive = true;\n            beaconColor = \"PURPLE\";\n            beaconBrightness = 100;\n            beaconPattern = \"strobe\";\n        } else if (alertLevel === \"high\") {\n            sirenActive = true;\n            sirenVolume = 70;\n            sirenPattern = \"warning\";\n            sirenDuration = 60;\n            beaconActive = true;\n            beaconColor = \"ORANGE\";\n            beaconBrightness = 80;\n            beaconPattern = \"slow_flash\";\n        } else if (alertLevel === \"medium\") {\n            beaconActive = true;\n            beaconColor = \"YELLOW\";\n            beaconBrightness = 60;\n            beaconPattern = \"steady\";\n        }\n    }\n\n    // Return enhanced object for high security floor 5\n    return {\n        zone: zone,\n        device: device,\n        alertLevel: alertLevel,\n        priority: priority,\n        timestamp: timestamp,\n        processedAt: new Date().toISOString(),\n        siren_active: sirenActive,\n        siren_volume: sirenVolume,\n        siren_pattern: sirenPattern,\n        siren_duration: sirenDuration,\n        beacon_active: beaconActive,\n        beacon_color: beaconColor,\n        beacon_brightness: beaconBrightness,\n        beacon_pattern: beaconPattern,\n        // High Security Floor 5 Sirens\n        SIREN_H5_001_active: sirenActive, // Executive Office A\n        SIREN_H5_002_active: sirenActive, // Executive Office B\n        SIREN_H5_003_active: sirenActive, // Conference Room Alpha\n        SIREN_H5_004_active: sirenActive, // Conference Room Beta\n        SIREN_H5_005_active: sirenActive, // High Security Corridor\n        SIREN_H5_006_active: sirenActive, // Server Room A\n        SIREN_H5_007_active: sirenActive, // Data Center\n        SIREN_H5_008_active: sirenActive, // Executive Floor Elevator Bay\n        // High Security Floor 5 Beacons\n        BEACON_H5_001_active: beaconActive, // Executive Office A Entrance\n        BEACON_H5_002_active: beaconActive, // Executive Office B Entrance\n        BEACON_H5_003_active: beaconActive, // Conference Room Alpha\n        BEACON_H5_004_active: beaconActive, // Conference Room Beta\n        BEACON_H5_005_active: beaconActive, // High Security Corridor\n        BEACON_H5_006_active: beaconActive, // Server Room A Access\n        BEACON_H5_007_active: beaconActive, // Server Room B Access\n        BEACON_H5_008_active: beaconActive, // Data Center Emergency Alert\n        BEACON_H5_009_active: beaconActive, // Executive Floor Elevator Bay\n        BEACON_H5_010_active: beaconActive  // High Security Reception Area\n    };\n}\n\nlet result = \"\";\n\nif (zone === \"high_security_floor\") {\n    result = determineActuatorAction();\n} else return null;\n\nif (result) {\n    // Log enhanced status for high security\n    node.log(`HIGH SECURITY: ${result.device} ${result.alertLevel}: Siren=${result.siren_active} (${result.siren_volume}%), Beacon=${result.beacon_active} (${result.beacon_color})`);\n\n    // Return single message with enhanced structure for high security floor 5\n    return {\n        topic: `bank_security/zone/high_security_floor/actuators/status`,\n        payload: result\n    };\n} else {\n    node.log(`Alert ignored: Not for high security floor`);\n    return null;\n}",
+        "outputs": 1,
+        "timeout": 0,
+        "noerr": 0,
+        "initialize": "",
+        "finalize": "",
+        "libs": [],
+        "x": 2600,
+        "y": 940,
+        "wires": [
+            [
+                "01cca00ac1682dac"
+            ]
+        ]
+    },
+    {
+        "id": "7023adbecf0db908",
+        "type": "mqtt out",
+        "z": "d100dcfe581502c7",
+        "name": "",
+        "topic": "",
+        "qos": "",
+        "retain": "",
+        "respTopic": "",
+        "contentType": "",
+        "userProps": "",
+        "correl": "",
+        "expiry": "",
+        "broker": "9fb88f61108d1d18",
+        "x": 2850,
+        "y": 740,
+        "wires": []
+    },
+    {
+        "id": "c52b8bb1791deafd",
+        "type": "mqtt out",
+        "z": "d100dcfe581502c7",
+        "name": "",
+        "topic": "",
+        "qos": "",
+        "retain": "",
+        "respTopic": "",
+        "contentType": "",
+        "userProps": "",
+        "correl": "",
+        "expiry": "",
+        "broker": "9fb88f61108d1d18",
+        "x": 2850,
+        "y": 840,
+        "wires": []
+    },
+    {
+        "id": "01cca00ac1682dac",
+        "type": "mqtt out",
+        "z": "d100dcfe581502c7",
+        "name": "",
+        "topic": "",
+        "qos": "",
+        "retain": "",
+        "respTopic": "",
+        "contentType": "",
+        "userProps": "",
+        "correl": "",
+        "expiry": "",
+        "broker": "9fb88f61108d1d18",
+        "x": 2850,
+        "y": 940,
+        "wires": []
+    },
+    {
+        "id": "0a076dc5eefe0e6d",
+        "type": "mqtt out",
+        "z": "d100dcfe581502c7",
+        "name": "",
+        "topic": "",
+        "qos": "",
+        "retain": "",
+        "respTopic": "",
+        "contentType": "",
+        "userProps": "",
+        "correl": "",
+        "expiry": "",
+        "broker": "9fb88f61108d1d18",
+        "x": 2850,
+        "y": 1040,
+        "wires": []
+    },
+    {
+        "id": "a1b6d34020356b40",
+        "type": "debug",
+        "z": "d100dcfe581502c7",
+        "name": "debug 1",
+        "active": true,
+        "tosidebar": true,
+        "console": false,
+        "tostatus": false,
+        "complete": "false",
+        "statusVal": "",
+        "statusType": "auto",
+        "x": 660,
+        "y": 1380,
+        "wires": []
+    },
+    {
+        "id": "4b9a790e29a05e72",
+        "type": "function",
+        "z": "d100dcfe581502c7",
+        "name": "Data splitter",
+        "func": "const data = msg.payload.data || {};\n\nconst output = {\n    motionDetected: data.motionDetected,\n    faceDetected: data.faceDetected,\n    suspiciousBehavior: data.suspiciousBehavior,\n    isRecording: data.isRecording\n};\n\nmsg.payload = output;\n\nreturn msg;",
+        "outputs": 1,
+        "timeout": 0,
+        "noerr": 0,
+        "initialize": "",
+        "finalize": "",
+        "libs": [],
+        "x": 810,
+        "y": 1460,
+        "wires": [
+            [
+                "a972c2c07afa432b"
+            ]
+        ],
+        "icon": "node-red/split.svg"
+    },
+    {
+        "id": "32dcc7e32f1be1d9",
+        "type": "ui_spacer",
+        "z": "d100dcfe581502c7",
+        "name": "spacer",
+        "group": "b03a1b1fa478e77e",
+        "order": 1,
+        "width": 16,
+        "height": 1
+    },
+    {
+        "id": "0a57e0402a458c9c",
+        "type": "ui_spacer",
+        "z": "d100dcfe581502c7",
+        "name": "spacer",
+        "group": "b03a1b1fa478e77e",
+        "order": 7,
+        "width": 2,
+        "height": 1
+    },
+    {
+        "id": "9e0b721221a5b195",
+        "type": "ui_spacer",
+        "z": "d100dcfe581502c7",
+        "name": "spacer",
+        "group": "b03a1b1fa478e77e",
+        "order": 9,
+        "width": 2,
+        "height": 1
+    },
+    {
+        "id": "53fabd3be61a57f1",
+        "type": "ui_spacer",
+        "z": "d100dcfe581502c7",
+        "name": "spacer",
+        "group": "b03a1b1fa478e77e",
+        "order": 10,
+        "width": 16,
+        "height": 1
+    },
+    {
+        "id": "13dbdee3744644d6",
+        "type": "ui_spacer",
+        "z": "d100dcfe581502c7",
+        "name": "spacer",
+        "group": "b03a1b1fa478e77e",
+        "order": 16,
+        "width": 2,
+        "height": 1
+    },
+    {
+        "id": "ec8607a855acef12",
+        "type": "ui_spacer",
+        "z": "d100dcfe581502c7",
+        "name": "spacer",
+        "group": "b03a1b1fa478e77e",
+        "order": 18,
+        "width": 2,
+        "height": 1
+    },
+    {
+        "id": "be8eb35eeca0b7e0",
+        "type": "ui_spacer",
+        "z": "d100dcfe581502c7",
+        "name": "spacer",
+        "group": "d6f43ba3c385021a",
+        "order": 5,
+        "width": 2,
+        "height": 1
+    },
+    {
+        "id": "fe3144b86e57aea9",
+        "type": "ui_spacer",
+        "z": "d100dcfe581502c7",
+        "name": "spacer",
+        "group": "d6f43ba3c385021a",
+        "order": 7,
+        "width": 2,
+        "height": 1
+    },
+    {
+        "id": "9fb88f61108d1d18",
+        "type": "mqtt-broker",
+        "name": "hivemqtt",
+        "broker": "6dbb5584fc034837b3d101db50a3cfb7.s1.eu.hivemq.cloud",
+        "port": "8883",
+        "tls": "cfb8d8ed5048f11c",
+        "clientid": "",
+        "autoConnect": true,
+        "usetls": true,
+        "protocolVersion": 4,
+        "keepalive": 60,
+        "cleansession": true,
+        "autoUnsubscribe": true,
+        "birthTopic": "",
+        "birthQos": "0",
+        "birthRetain": "false",
+        "birthPayload": "",
+        "birthMsg": {},
+        "closeTopic": "",
+        "closeQos": "0",
+        "closeRetain": "false",
+        "closePayload": "",
+        "closeMsg": {},
+        "willTopic": "",
+        "willQos": "0",
+        "willRetain": "false",
+        "willPayload": "",
+        "willMsg": {},
+        "userProps": "",
+        "sessionExpiry": ""
+    },
+    {
+        "id": "f9ad20b16fe46381",
+        "type": "mqtt-broker",
+        "name": "AWS New Endpoint",
+        "broker": "a1l8ixp5bd5vh9-ats.iot.us-east-1.amazonaws.com",
+        "port": "8883",
+        "tls": "0f84e6904af51918",
+        "clientid": "",
+        "autoConnect": true,
+        "usetls": true,
+        "protocolVersion": "5",
+        "keepalive": 60,
+        "cleansession": true,
+        "autoUnsubscribe": true,
+        "birthTopic": "",
+        "birthQos": "0",
+        "birthRetain": "false",
+        "birthPayload": "",
+        "birthMsg": {},
+        "closeTopic": "",
+        "closeQos": "0",
+        "closeRetain": "false",
+        "closePayload": "",
+        "closeMsg": {},
+        "willTopic": "",
+        "willQos": "0",
+        "willRetain": "false",
+        "willPayload": "",
+        "willMsg": {},
+        "userProps": "",
+        "sessionExpiry": ""
+    },
+    {
+        "id": "b03a1b1fa478e77e",
+        "type": "ui_group",
+        "name": "Gauges",
+        "tab": "c16b9af54040f331",
+        "order": 1,
+        "disp": true,
+        "width": 16,
+        "collapse": false,
+        "className": ""
+    },
+    {
+        "id": "d6f43ba3c385021a",
+        "type": "ui_group",
+        "name": "Gauges",
+        "tab": "8284566660faaa63",
+        "order": 3,
+        "disp": false,
+        "width": 16,
+        "collapse": false,
+        "className": ""
+    },
+    {
+        "id": "cfb8d8ed5048f11c",
+        "type": "tls-config",
+        "name": "hivemqtt",
+        "cert": "",
+        "key": "",
+        "ca": "",
+        "certname": "",
+        "keyname": "",
+        "caname": "isrgrootx1(1).pem",
+        "servername": "",
+        "verifyservercert": true,
+        "alpnprotocol": ""
+    },
+    {
+        "id": "0f84e6904af51918",
+        "type": "tls-config",
+        "name": "",
+        "cert": "",
+        "key": "",
+        "ca": "",
+        "certname": "24f32a20dad1577c9e2fd2d194c1f12635c47962079fe4f1b0ad479b77b468fd-certificate.pem.crt",
+        "keyname": "24f32a20dad1577c9e2fd2d194c1f12635c47962079fe4f1b0ad479b77b468fd-private.pem.key",
+        "caname": "AmazonRootCA1.pem",
+        "servername": "",
+        "verifyservercert": true,
+        "alpnprotocol": ""
+    },
+    {
+        "id": "c16b9af54040f331",
+        "type": "ui_tab",
+        "name": "Home",
+        "icon": "dashboard",
+        "disabled": false,
+        "hidden": false
+    },
+    {
+        "id": "8284566660faaa63",
+        "type": "ui_tab",
+        "name": "Zone: High security floor 5",
+        "icon": "dashboard",
+        "disabled": false,
+        "hidden": false
+    },
+    {
+        "id": "aa34827d688dd7f5",
+        "type": "global-config",
+        "env": [],
+        "modules": {
+            "node-red-contrib-simple-gate": "0.5.2",
+            "node-red-dashboard": "3.6.6"
+        }
+    }
+]

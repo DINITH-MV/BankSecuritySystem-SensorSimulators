@@ -162,10 +162,6 @@ class SecuritySystemOrchestrator {
       );
       console.log(`   - GET /status - Check system status`);
       console.log(`   - GET /stop - Stop all zones`);
-      console.log(`   - GET /info - System information`);
-      console.log(`\n Quick start: http://localhost:${port}/start/5`);
-      console.log(` Check status: http://localhost:${port}/status`);
-      console.log(`\n  You can also use interactive mode below:`);
     });
 
     // Also provide interactive command line option
